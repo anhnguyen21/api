@@ -69,7 +69,7 @@ class OrderController extends Controller
               "quantity" =>$pro[0]->quantity+1
           ]);
           echo "increase quantity of product";
-          $this->MessageAddProduct();
+          $this->MessageAddProduct($request->get('token_device'));
         }
     }
 
@@ -85,8 +85,8 @@ class OrderController extends Controller
         return response()->json($notification,200);
     }
 
-    function MessageAddProduct(){
-        $token = "dDR233eFQpytnnppn0ijxJ:APA91bG5xIxUhQ-pEbpNMOHrklqde6L0JwdRW6UF8h4gkMjYvdIjMUzBjutgHk5IhR0GQz-im-Blav_NZwt4v_Dxi0kK1TJbPmbHwIUPtth-l0K174p8ruwszMbnuLajvJkW35Rg12Q-";  
+    function MessageAddProduct($token_device){
+        $token =$token_device;  
         $from = "AAAA9kCHXEc:APA91bHGrJhFm8Ft0Tsh9XGjEFSvOaMpvLaI01EvdXttXhRabQVrdnjpHUsvFvCVcxLIzevVVuuOwxzhW0Gfw_p8i5EBS5n3cDj44JfdI_F4hH82R0QBo2-tR-CtyDynd-BPpVtCw0PY";
         $msg = array
               (
@@ -148,7 +148,7 @@ class OrderController extends Controller
                 DB::table('orders')->where('id', $order[$i]->id)->update(['id_orderStatus' => $order[$i]->id_orderStatus]);
             }
         }
-        $this->MessageAddProduct();   
+        $this->MessageAddProduct($request->get('token_device'));
         return $order;  
     }
 

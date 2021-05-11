@@ -43,6 +43,7 @@ Route::get('uploadImg',[ProfileControler::class,'uploadImage']);
 Route::get('profileAd',[ProfileControler::class,'profileAdmin']);
 
 //Products
+Route::get('Allproducts/{id_user}',[ProductController::class,'getALlProduct']);
 Route::get('products',[ProductController::class,'getProduct']);
 Route::get('product/{id}',[ProductController::class,'show']);
 Route::post('products',[ProductController::class,'store']);
@@ -67,6 +68,7 @@ Route::get('getWeek/{counter}',[ProductController::class,'getDayofYear']);
 Route::get('getNumber',[ProductController::class,'getNumberWeek']);
 
 //Order
+Route::get('Allorder/{id_user}',[OrderController::class,'getAllOrder']);
 Route::get('order',[OrderController::class,'getOrder']);
 Route::get('order/{id}',[OrderController::class,'getOrderDetails']);
 Route::post('addproducttoorder',[OrderController::class,'getAddProduct']);

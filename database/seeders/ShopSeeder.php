@@ -21,7 +21,7 @@ class ShopSeeder extends Seeder
             'image'=> '',
             'lat'=> 'sđf',
             'lng'=>'dgsdg',
-            'distance'=>3.4
+            'distance'=>3
         ]);
         DB::table('shop')->insert([
             'id_user' => 1,
@@ -30,7 +30,7 @@ class ShopSeeder extends Seeder
             'image'=> '',
             'lat'=> 'sđf',
             'lng'=>'dgsdg',
-            'distance'=>3.5
+            'distance'=>3
         ]);
         DB::table('shop')->insert([
             'id_user' => 2,
@@ -39,7 +39,7 @@ class ShopSeeder extends Seeder
             'image'=> '',
             'lat'=> 'sđf',
             'lng'=>'dgsdg',
-            'distance'=>6.4
+            'distance'=>6
         ]);
         DB::table('shop')->insert([
             'id_user' => 1,
@@ -48,7 +48,7 @@ class ShopSeeder extends Seeder
             'image'=> '',
             'lat'=> 'sđf',
             'lng'=>'dgsdg',
-            'distance'=>8.4
+            'distance'=>8
         ]);
     }
 }

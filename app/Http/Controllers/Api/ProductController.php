@@ -20,7 +20,11 @@ class ProductController extends Controller
     {
         return product::all();
     }
-    
+    public function getALlProduct($id_user)
+    {
+      $product = DB::select('select p.*,s.* from product as p , shop as s where p.id_shop = s.id and s.id_user ='.$id_user);
+      return $product;
+    }
     public function store(Request $request)
     {
         $product = new product();
@@ -62,10 +66,11 @@ class ProductController extends Controller
         $product = product::find($id);
         $product->delete();
         return response()->json($product);
-    }
+    }  
     public function getLineProductChart(){
-        $product=product::select(product::raw('MONTH(created_at) as month'),product::raw('COUNT(id) as sum'))
-        ->groupBy('month')->get();
+        $product=product::select(product::raw('extract(month from "created_at") as month'),product::raw('COUNT(id) as sum'))
+        ->whereYear('created_at', now()->year)
+        ->groupBy('month')->get(); 
         $productmonth=[0,0,0,0,0,0,0,0,0,0,0,0];
         foreach($product as $product){
         for($i=1;$i<=12;$i++){
@@ -77,7 +82,8 @@ class ProductController extends Controller
         return $productmonth;
     }
     public function getLineUserChart(){
-        $users=users::select(users::raw('MONTH(created_at) as month'),users::raw('COUNT(id) as sum'))
+        $users=users::select(users::raw('extract(month from "created_at") as month'),users::raw('COUNT(id) as sum'))
+        ->whereYear('created_at', now()->year)
         ->groupBy('month')->get();
         $userstmonth=[0,0,0,0,0,0,0,0,0,0,0,0];
         foreach($users as $users){
@@ -90,18 +96,20 @@ class ProductController extends Controller
         return $userstmonth;
     }
      public function getBarOrderChart(){
-        $order=order::select(order::raw('MONTH(created_at) as month'),order::raw('COUNT(id) as sum'))
-        ->groupBy('month')->get();
-        $order_month=[0,0,0,0,0,0,0,0,0,0,0,0];
-        foreach($order as $order){
-        for($i=1;$i<=12;$i++){
-          if($i==$order["month"]){
-            $order_month[$i-1]=$order["sum"];
-          }
+      $posts= order::select(DB::raw('extract(month from "created_at") as month'),DB::raw('COUNT(id) as sum'))
+      ->whereYear('created_at', now()->year)
+      ->groupBy('month')->get(); 
+      $postmonth=[0,0,0,0,0,0,0,0,0,0,0,0];
+      foreach($posts as $post){
+      for($i=1;$i<=12;$i++){
+        if($i==$post["month"]){
+          $postmonth[$i-1]=$post["sum"];
         }
-        }
-        return $order_month;
-    }
+      } 
+      }   
+      return $posts;
+}
+  
      public function catePieChart(){
         $day =Carbon::now()->format('Y-m-d');
         $total_quantity = order::

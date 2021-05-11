@@ -17,7 +17,6 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert(
             [
-                'id'=>1,
                 'account'=>'onho',
                 'firstName'=>'on',
                 'lastName'=>'hoon',
@@ -31,25 +30,8 @@ class UserSeeder extends Seeder
                 'remember_token'=>1,
                 "created_at"=> "2021-02-07 11:06:10.000000",
                 "updated_at"=> "2021-02-28 11:06:10.000000"
-        	],
-            [
-            "id"=> 2,
-            "account"=> "anhnguyen",
-            "firstName"=> "Anh",
-            "lastName"=> "Anh Nguyen",
-            "email"=> "anhanh5811@gmail.com",
-            "phone"=> "0123456789",
-            "gender"=> "1",
-            "address"=> "Trieu Long, Trieu Phong, Quang Tri.",
-            "password" => Hash::make(123),
-            "birthday"=> "2021-02-21",
-            "img"=> "https://1.bp.blogspot.com/-8Z4fYURRKh0/XqZl2livJBI/AAAAAAAAjO4/DgIwuLKAoCUxlZSjQc363n_I0cV_XfKrQCLcBGAsYHQ/s1600/Anh-avatar-dep-cho-con-trai%2B%252823%2529.jpg",
-            "remember_token"=> "0",
-            "created_at"=> "2021-04-07 11:06:10.000000",
-            "updated_at"=> "2021-02-28 11:06:10.000000"
-        ]);
+        	]);
         DB::table('users')->insert([
-            "id"=> 3,
             "account"=> "anh",
             "firstName"=> "anh",
             "lastName"=> "Nguyen",
@@ -65,20 +47,50 @@ class UserSeeder extends Seeder
             "updated_at"=> "2021-06-28 11:06:10.000000"
         ]);
         DB::table('users')->insert([
-            "id"=> 4,
             "account"=> "anh99",
             "firstName"=> "anh",
             "lastName"=> "Nguyen",
-            "email"=> "112",
+            "email"=> "yeu@gmail.com",
             "phone"=> "1",
             "gender"=> "1",
             "address"=> "1",
             "password" => Hash::make(123),
             "birthday"=> "2021-02-24",
-            "img"=> "https://i.9mobi.vn/cf/Images/tt/2021/3/15/hinh-anh-dai-dien-dep-dung-cho-facebook-instagram-zalo-11.jpg",
+            "img"=> "https://scr.vn/wp-content/uploads/2020/07/%E1%BA%A2nh-%C4%91%C3%B4i-anime-n%E1%BB%AF.jpg",
             "remember_token"=> "2",
             "created_at"=> "2021-05-07 11:06:10.000000",
             "updated_at"=> "2021-06-28 11:06:10.000000"
         ]);
+        DB::table('users')->insert([
+            "account"=> "laoyeu",
+            "firstName"=> "yeu",
+            "lastName"=> "lao",
+            "email"=> "yeuho@gmail.com",
+            "phone"=> "1",
+            "gender"=> "1",
+            "address"=> "1",
+            "password" => Hash::make(333),
+            "birthday"=> "2021-02-24",
+            "img"=> "https://hiclinic-ms-notification.herokuapp.com/admins/clinicNotification?page=0",
+            "remember_token"=> "2",
+            "created_at"=> "2021-05-07 11:06:10.000000",
+            "updated_at"=> "2021-06-28 11:06:10.000000"
+        ]);
+        DB::table('users')->insert([
+            "account"=> "laodai",
+            "firstName"=> "dai",
+            "lastName"=> "lao",
+            "email"=> "yeulao@gmail.com",
+            "phone"=> "1",
+            "gender"=> "1",
+            "address"=> "1",
+            "password" => Hash::make(444),
+            "birthday"=> "2021-02-24",
+            "img"=> "https://i.pinimg.com/736x/f6/fd/14/f6fd14e8e56da3e2e3ee7e46f0c1be44.jpg",
+            "remember_token"=> "2",
+            "created_at"=> "2021-05-07 11:06:10.000000",
+            "updated_at"=> "2021-06-28 11:06:10.000000"
+        ]);
+        
     }
 }

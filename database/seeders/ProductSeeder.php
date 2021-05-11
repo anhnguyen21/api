@@ -25,8 +25,8 @@ class ProductSeeder extends Seeder
             "discount" => 10,
             "heart" => 0,
             "quantity" => 100,
-            // "created_at" => "2021-02-23T15:38:32.000000Z",
-            // "updated_at" => "2021-02-23T15:38:32.000000Z"
+            "created_at" => "2021-02-23 15:38:32.000000",
+            "updated_at" => "2021-02-23 15:38:32.000000"
         ]);
         DB::table('product')->insert([
                 "id"=> 2,

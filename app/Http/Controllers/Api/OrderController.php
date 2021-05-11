@@ -23,10 +23,15 @@ class OrderController extends Controller
         foreach ($orders as $order) {
             $order->product;
             $order->users;
+            $order->order_status;
            }
      return $orders;
     }
-
+    public function getAllOrder($id_user)
+    {
+        $orders = DB::select('select o.*,s.* from orders as o , shop as s where o.id_shop = s.id and s.id_user ='.$id_user);
+      return $orders;
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -69,7 +74,7 @@ class OrderController extends Controller
               "quantity" =>$pro[0]->quantity+1
           ]);
           echo "increase quantity of product";
-          $this->MessageAddProduct($request->get('token_device'));
+          $this->MessageAddProduct();
         }
     }
 
@@ -85,8 +90,8 @@ class OrderController extends Controller
         return response()->json($notification,200);
     }
 
-    function MessageAddProduct($token_device){
-        $token =$token_device;  
+    function MessageAddProduct(){
+        $token = "dDR233eFQpytnnppn0ijxJ:APA91bG5xIxUhQ-pEbpNMOHrklqde6L0JwdRW6UF8h4gkMjYvdIjMUzBjutgHk5IhR0GQz-im-Blav_NZwt4v_Dxi0kK1TJbPmbHwIUPtth-l0K174p8ruwszMbnuLajvJkW35Rg12Q-";  
         $from = "AAAA9kCHXEc:APA91bHGrJhFm8Ft0Tsh9XGjEFSvOaMpvLaI01EvdXttXhRabQVrdnjpHUsvFvCVcxLIzevVVuuOwxzhW0Gfw_p8i5EBS5n3cDj44JfdI_F4hH82R0QBo2-tR-CtyDynd-BPpVtCw0PY";
         $msg = array
               (
@@ -148,7 +153,7 @@ class OrderController extends Controller
                 DB::table('orders')->where('id', $order[$i]->id)->update(['id_orderStatus' => $order[$i]->id_orderStatus]);
             }
         }
-        $this->MessageAddProduct($request->get('token_device'));
+        $this->MessageAddProduct();   
         return $order;  
     }
 

@@ -96,18 +96,18 @@ class ProductController extends Controller
         return $userstmonth;
     }
      public function getBarOrderChart(){
-      $posts= order::select(DB::raw('extract(month from "created_at") as month'),DB::raw('COUNT(id) as sum'))
+      $orders= order::select(DB::raw('extract(month from "created_at") as month'),DB::raw('COUNT(id) as sum'))
       ->whereYear('created_at', now()->year)
       ->groupBy('month')->get(); 
-      $postmonth=[0,0,0,0,0,0,0,0,0,0,0,0];
-      foreach($posts as $post){
+      $ordermonth=[0,0,0,0,0,0,0,0,0,0,0,0];
+      foreach($orders as $order){
       for($i=1;$i<=12;$i++){
-        if($i==$post["month"]){
-          $postmonth[$i-1]=$post["sum"];
+        if($i==$order["month"]){
+          $ordermonth[$i-1]=$order["sum"];
         }
       } 
       }   
-      return $posts;
+      return $ordermonth;
 }
   
      public function catePieChart(){

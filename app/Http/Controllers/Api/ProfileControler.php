@@ -31,7 +31,7 @@ class ProfileControler extends Controller
         $userfind->email =$request->email;
         $userfind->phone =$request->phone;
         $userfind->address =$request->address;
-        $userfind->password=Hash::make($request->password);
+        $userfind->password= Hash::make($request->password);
         $userfind->gender =$request->gender;
         $userfind->birthday =$request->birthday;
         $userfind->remember_token =$request->remember_token;

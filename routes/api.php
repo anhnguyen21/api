@@ -37,7 +37,7 @@ Route::post('loginShop',[LoginController::class,'loginShop']);
 //Profile
 Route::put('profile/{id}',[ProfileControler::class,'update']);
 Route::get('profileAdmin/{id}',[ProfileControler::class,'getProfile']);
-Route::patch('updateProfile/{id}',[ProfileControler::class,'updateEditAdmin']);
+Route::patch('updateProfile/{id}',[ProfileControler::class,'updateProfile']);
 Route::post('uploadImg',[ProfileControler::class,'uploadImage']);
 Route::get('uploadImg',[ProfileControler::class,'uploadImage']);
 Route::get('profileAd',[ProfileControler::class,'profileAdmin']);
@@ -106,11 +106,11 @@ Route::post('PostChatAdmin',[ChatContronller::class,'postMessageUserToShopAdmin'
 Route::post('PostInsertChatAdmin',[ChatContronller::class,'postInsertMessageUserToShopAdmin']);
 
 //Chat shop
-Route::get('chatadmin',[ChatController::class,'getchatadmin']);
-Route::get('chatcustomer',[ChatController::class,'getchatCustomeradmin']);
-Route::post('chatcus',[ChatController::class,'addMessageAmin']);
+Route::get('chatadmin',[ChatContronller::class,'getchatadmin']);
+Route::get('chatcustomer',[ChatContronller::class,'getchatCustomeradmin']);
+Route::post('chatcus',[ChatContronller::class,'addMessageAmin']);
 //Search list chat
-Route::post('searchchat',[ChatController::class,'search']);
+Route::post('searchchat',[ChatContronller::class,'search']);
 
 
 //Progress

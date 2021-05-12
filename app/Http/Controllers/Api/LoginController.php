@@ -45,7 +45,7 @@ class LoginController extends Controller
             if (Auth::attempt(['account' => $name, 'password' => $password])) {
                 $user_id= Auth::user()->id;
                 $cookie=Cookie::make('user', $name, 30);
-                $data = array("idToken" => $user_id, "role" => Auth::user()->remember_token);
+                $data = array("idToken" => $user_id, "role" => (int)Auth::user()->remember_token);
                 return response()->json($data,200)->cookie($cookie);
                 
     		}else{

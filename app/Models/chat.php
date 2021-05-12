@@ -10,7 +10,7 @@ class chat extends Model
     public $timestamps = false;
     protected $table="chat";
     protected $fillable = [
-        'id','id_user','id_role','id_admin','content','time'
+        'id','id_user','id_role','id_admin','id_shop','content','time'
     ];
 
     public function User()

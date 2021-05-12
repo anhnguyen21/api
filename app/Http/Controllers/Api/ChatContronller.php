@@ -54,10 +54,10 @@ class ChatContronller extends Controller
         echo "add 1 message for admin";
     }
     public function getchatadmin(){
-        $user =DB::table('chat')
+        $user = DB::table('chat')
         ->join('users', 'users.id', '=', 'chat.id_user')
-        ->groupBy('chat.id_user')
         ->get();
+     //  $user = DB::select('select c.*,u.* from chat as c , users as u where c.id_user=u.id');
         return $user;
     }
     public function getchatCustomeradmin(Request $request)

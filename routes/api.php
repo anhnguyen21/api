@@ -37,7 +37,7 @@ Route::post('loginShop',[LoginController::class,'loginShop']);
 //Profile
 Route::put('profile/{id}',[ProfileControler::class,'update']);
 Route::get('profileAdmin/{id}',[ProfileControler::class,'getProfile']);
-Route::patch('updateProfile/{id}',[ProfileControler::class,'updateProfile']);
+Route::patch('updateProfile/{id}',[ProfileControler::class,'updateEditAdmin']);
 Route::post('uploadImg',[ProfileControler::class,'uploadImage']);
 Route::get('uploadImg',[ProfileControler::class,'uploadImage']);
 Route::get('profileAd',[ProfileControler::class,'profileAdmin']);

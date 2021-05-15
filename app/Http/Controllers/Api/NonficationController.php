@@ -28,10 +28,8 @@ class NonficationController extends Controller
     //     return $notification;
     // }
     public function getNotification($id){
-        $notification = DB::select('select u.*,n.*,p.* from nonfications as n , users as u, product as p where n.id_user=u.id and n.id_product = p.id'  );
+        $notification = DB::select('select u.*,n.*,p.* from nonfications as n , users as u, product as p where n.id_user=u.id and n.id_product = p.id and u.id='.$id);
         return $notification;
-        echo "get notification";
-
     }
 
     /**

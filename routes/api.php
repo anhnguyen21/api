@@ -75,7 +75,8 @@ Route::post('addproducttoorder',[OrderController::class,'getAddProduct']);
 Route::put('order/{id}',[OrderController::class,'update']);
 Route::get('order_show/{id}',[OrderController::class,'show']);
 Route::get('detail_order/{id}',[OrderController::class,'getOrderDetailsAdmin']);
-
+Route::post('addpro',[OrderController::class,'getAddPro']);
+Route::delete('orders/{id}',[OrderController::class, 'deleteOrder']);
 Route::post('deleteproducttoorder',[OrderController::class,'deleteProductInOrder']);
 Route::delete('order/{id}',[OrderController::class, 'destroy']);
 

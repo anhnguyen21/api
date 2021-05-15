@@ -35,7 +35,7 @@ class ProfileControler extends Controller
         $userfind->gender =$request->gender;
         $userfind->birthday =$request->birthday;
         $userfind->remember_token =$request->remember_token;
-        $userfind->images =$request->images;
+        $userfind->img =$request->img;
         $userfind->save();
         echo($userfind);
 }

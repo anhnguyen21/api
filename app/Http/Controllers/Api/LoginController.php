@@ -145,7 +145,7 @@ class LoginController extends Controller
                 $users->password=Hash::make($request->get('password'));
                 $users->birthday=$request->get('brithday');
                 $users->img=$request->get('img');
-                $users->remember_token='123';
+                $users->remember_token='0';
                 $users->save();
                 echo "regist user success";
             }

@@ -78,6 +78,28 @@ class OrderController extends Controller
         }
     }
 
+    public function getAddPro(Request $request)
+    {
+        echo strval($request->get('id_user'));
+        $pro=DB::select('select id , quantity from orders where id_product ='.($request->get('id_pro')).' and id_user='.($request->get('id_user')));
+        $this->notificationAddProduct($request->get('id_user'),$request->get('id_pro'));
+        if($pro==null){
+            $order=new order();
+            $order->id_product=$request->get('id_pro');
+            $order->id_user=$request->get('id_user');
+            $order->id_shop=$request->get('id_shop');
+            $order->id_orderStatus=1;
+            $order->quantity=1;
+            $order->save();
+            echo "add new product sussess";
+        }else{
+            order::where("id", $pro[0]->id)->update([
+              "quantity" =>$pro[0]->quantity+1
+          ]);
+          echo "increase quantity of product";
+        }
+    }
+
     public function notificationAddProduct($id_user, $id_pro)
     {
         $notification = new nonfication();
@@ -190,5 +212,9 @@ class OrderController extends Controller
             DB::delete('delete from orders where id ='.$pro[0]->id);
             echo "delete product";
         }
+    }
+
+    public function deleteOrder($id){
+        return DB::delete('delete from orders where id ='.$id);
     }
 }

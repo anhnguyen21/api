@@ -75,7 +75,7 @@ Route::post('addproducttoorder',[OrderController::class,'getAddProduct']);
 Route::put('order/{id}',[OrderController::class,'update']);
 Route::get('order_show/{id}',[OrderController::class,'show']);
 Route::get('detail_order/{id}',[OrderController::class,'getOrderDetailsAdmin']);
-
+Route::put('orderUpdate/{id}',[OrderController::class,'updateAdmin']);
 Route::post('deleteproducttoorder',[OrderController::class,'deleteProductInOrder']);
 Route::delete('order/{id}',[OrderController::class, 'destroy']);
 
@@ -92,7 +92,11 @@ Route::post('heart',[HeartController::class,'addProductHeart']);
 //Nonfication
 Route::get('nofication',[NonficationController::class,'index']);
 Route::get('nofication/{id}',[NonficationController::class,'getNotification']);
+Route::get('noficationShop/{id}',[NonficationController::class,'getNotificationShop']);
 Route::post('notification',[NonficationController::class,'store']);
+Route::delete('nontification/{id}',[NonficationController::class, 'destroy']);
+
+
 
 //Chat
 Route::get('chat',[ChatContronller::class,'index']);

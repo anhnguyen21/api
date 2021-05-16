@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\users;
-
+use Illuminate\Support\Facades\Hash;
 class ProfileControler extends Controller
 {
     /**
@@ -35,7 +35,7 @@ class ProfileControler extends Controller
         $userfind->gender =$request->gender;
         $userfind->birthday =$request->birthday;
         $userfind->remember_token =$request->remember_token;
-        $userfind->images =$request->images;
+        $userfind->img =$request->img;
         $userfind->save();
         echo($userfind);
 }

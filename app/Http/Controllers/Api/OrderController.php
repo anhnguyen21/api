@@ -157,6 +157,16 @@ class OrderController extends Controller
         return $order;  
     }
 
+    public function updateAdmin(Request $request, $id)
+    {
+        $orders = order::find($id);
+            $orders->order_status;
+            if($orders->order_status[0]->id < 5){
+                $orders->id_orderStatus = $orders->id_orderStatus + 1;
+                $orders->save();
+            }
+        return $orders;
+    }
     /**
      * Remove the specified resource from storage.
      *

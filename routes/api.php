@@ -93,6 +93,7 @@ Route::post('heart',[HeartController::class,'addProductHeart']);
 
 //Nonfication
 Route::get('nofication',[NonficationController::class,'index']);
+Route::get('nofication/deliver',[NonficationController::class,'getNotificationOfDeliver']);
 Route::get('nofication/{id}',[NonficationController::class,'getNotification']);
 Route::get('noficationShop/{id}',[NonficationController::class,'getNotificationShop']);
 Route::post('notification',[NonficationController::class,'store']);
@@ -121,6 +122,8 @@ Route::post('searchchat',[ChatContronller::class,'search']);
 
 //Progress
 Route::get('progress/{id}',[ProgressController::class,'getProgress']);
+Route::get('progress/waiting/{id}',[ProgressController::class,'getProgressWaiting']);
+Route::get('progress/suscess/{id}',[ProgressController::class,'getProgressSucess']);
 Route::put('progress/{id}',[ProgressController::class,'update']);
 
 //PromotionContronller

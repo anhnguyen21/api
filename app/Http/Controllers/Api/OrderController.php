@@ -64,7 +64,7 @@ class OrderController extends Controller
             $order->id_product=$request->get('id_pro');
             $order->id_user=$request->get('id_user');
             $order->id_shop=$request->get('id_shop');
-            $order->id_orderStatus=1;
+            $order->id_orderStatus=0;
             $order->quantity=1;
             $order->save();
             echo "add new product sussess";
@@ -88,7 +88,7 @@ class OrderController extends Controller
             $order->id_product=$request->get('id_pro');
             $order->id_user=$request->get('id_user');
             $order->id_shop=$request->get('id_shop');
-            $order->id_orderStatus=1;
+            $order->id_orderStatus=0;
             $order->quantity=1;
             $order->save();
             echo "add new product sussess";
@@ -170,13 +170,13 @@ class OrderController extends Controller
         $order=DB::select('select * from orders where id_user='.$id);
         json_encode($order, TRUE);
         for($i=0 ; $i<count($order) ; $i++){
-            if($order[$i]->id_orderStatus = 1){
+            if($order[$i]->id_orderStatus == 0){
                 $order[$i]->id_orderStatus = $order[$i]->id_orderStatus + 1;
                 DB::table('orders')->where('id', $order[$i]->id)->update(['id_orderStatus' => $order[$i]->id_orderStatus]);
             }
         }
         $this->MessageAddProduct($request->get('token_device'));   
-        return $order;  
+        return $order;
     }
 
     public function updateAdmin(Request $request, $id)

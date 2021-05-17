@@ -9,6 +9,9 @@ use App\Models\order;
 use App\Models\progress;
 use App\Models\nonfication;
 use App\Models\product;
+use App\Models\users;
+use App\Models\paymentOder;
+use App\Models\payment;
 
 class OrderController extends Controller
 {
@@ -167,16 +170,39 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $payment=new payment();
+        $payment->user_id=$request->get('user_id');
+        $payment->name_recive=$request->get('name_recive');
+        $payment->total=$request->get('total');
+        $payment->address=$request->get('address');
+        $payment->save();
         $order=DB::select('select * from orders where id_user='.$id);
         json_encode($order, TRUE);
         for($i=0 ; $i<count($order) ; $i++){
             if($order[$i]->id_orderStatus == 0){
                 $order[$i]->id_orderStatus = $order[$i]->id_orderStatus + 1;
                 DB::table('orders')->where('id', $order[$i]->id)->update(['id_orderStatus' => $order[$i]->id_orderStatus]);
+                $paymentOder=new paymentOder();
+                $paymentOder->payment_id=$payment->id;
+                $paymentOder->order_id=$order[$i]->id;
+                $paymentOder->save();
             }
         }
+        $this->notificationPayOrder($id);
         $this->MessageAddProduct($request->get('token_device'));   
         return $order;
+    }   
+
+    public function notificationPayOrder($id_user)
+    {
+        $notification = new nonfication();
+        $notification->id_product=0;
+        $notification->id_user=0;
+        $notification->type = 3;
+        $notification->content = 'Bạn vừa có thêm đơn hàng mới từ'." ".users::find($id_user)->account;
+        $notification->time = date_create()->format('Y-m-d H:i:s');
+        $notification->save();
+        return response()->json($notification,200);
     }
 
     public function updateAdmin(Request $request, $id)

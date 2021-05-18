@@ -60,19 +60,19 @@ class OrderController extends Controller
     public function getAddProduct(Request $request)
     {
         echo strval($request->get('id_user'));
-        $pro=DB::select('select id , quantity, id_orderStatus from orders where id_orderStatus=0 and id_product ='.($request->get('id_pro')).' and id_user='.($request->get('id_user')));
+        $pro=DB::select('select id , quantity, id_status from orders where id_status=0 and id_product ='.($request->get('id_pro')).' and id_user='.($request->get('id_user')));
         $this->notificationAddProduct($request->get('id_user'),$request->get('id_pro'));
         if($pro==null){
             $order=new order();
             $order->id_product=$request->get('id_pro');
             $order->id_user=$request->get('id_user');
             $order->id_shop=$request->get('id_shop');
-            $order->id_orderStatus=0;
+            $order->id_status=0;
             $order->quantity=1;
             $order->save();
             echo "add new product sussess";
             $this->MessageAddProduct($request->get('token_device'));
-        }else if($pro[0]->id_orderStatus === 0){
+        }else if($pro[0]->id_status === 0){
             order::where("id", $pro[0]->id)->update([
               "quantity" =>$pro[0]->quantity+1
           ]);
@@ -91,7 +91,7 @@ class OrderController extends Controller
             $order->id_product=$request->get('id_pro');
             $order->id_user=$request->get('id_user');
             $order->id_shop=$request->get('id_shop');
-            $order->id_orderStatus=0;
+            $order->id_status=0;
             $order->quantity=1;
             $order->save();
             echo "add new product sussess";
@@ -153,7 +153,7 @@ class OrderController extends Controller
 
     public function getOrderDetails($id)
     {
-        $order = DB::select('select o.quantity as quantityCart, p.* from product as p , orders as o where o.id_orderStatus=0 and p.id =o.id_product and o.id_user ='.$id);
+        $order = DB::select('select o.quantity as quantityCart, p.* from product as p , orders as o where o.id_status=0 and p.id =o.id_product and o.id_user ='.$id);
         return $order;
     }
     public function getOrderDetailsAdmin($id)
@@ -179,9 +179,9 @@ class OrderController extends Controller
         $order=DB::select('select * from orders where id_user='.$id);
         json_encode($order, TRUE);
         for($i=0 ; $i<count($order) ; $i++){
-            if($order[$i]->id_orderStatus == 0){
-                $order[$i]->id_orderStatus = $order[$i]->id_orderStatus + 1;
-                DB::table('orders')->where('id', $order[$i]->id)->update(['id_orderStatus' => $order[$i]->id_orderStatus]);
+            if($order[$i]->id_status == 0){
+                $order[$i]->id_status = $order[$i]->id_status + 1;
+                DB::table('orders')->where('id', $order[$i]->id)->update(['id_status' => $order[$i]->id_status]);
                 $paymentOder=new paymentOder();
                 $paymentOder->payment_id=$payment->id;
                 $paymentOder->order_id=$order[$i]->id;
@@ -210,7 +210,7 @@ class OrderController extends Controller
         $orders = order::find($id);
             $orders->order_status;
             if($orders->order_status[0]->id < 5){
-                $orders->id_orderStatus = $orders->id_orderStatus + 1;
+                $orders->id_status = $orders->id_status + 1;
                 $orders->save();
             }
         return $orders;

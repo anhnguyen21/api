@@ -125,7 +125,17 @@ class OrderController extends Controller
         dd($result);
         curl_close( $ch );
     }
-
+    
+    public function updateAdmin(Request $request, $id)
+    {
+        $orders = order::find($id);
+            $orders->order_status;
+            if($orders->order_status[0]->id < 5){
+                $orders->id_orderStatus = $orders->id_orderStatus + 1;
+                $orders->save();
+            }
+        return $orders;
+    }
     public function getOrderDetails($id)
     {
         $order = DB::select('select o.quantity as quantityCart, p.* from product as p , orders as o where p.id =o.id_product and o.id_user ='.$id);

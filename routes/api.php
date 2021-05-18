@@ -73,6 +73,7 @@ Route::get('order',[OrderController::class,'getOrder']);
 Route::get('order/{id}',[OrderController::class,'getOrderDetails']);
 Route::post('addproducttoorder',[OrderController::class,'getAddProduct']);
 Route::put('order/{id}',[OrderController::class,'update']);
+Route::put('orderUpdate/{id}',[OrderController::class,'updateAdmin']);
 Route::get('order_show/{id}',[OrderController::class,'show']);
 Route::get('detail_order/{id}',[OrderController::class,'getOrderDetailsAdmin']);
 

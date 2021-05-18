@@ -18,6 +18,10 @@ class DatabaseSeeder extends Seeder
         // $this->call(OrderStatusSeeder::class);
         // $this->call(OrderSeeder::class);
         // $this->call(PromotionSeeder::class);
-        $this->call(ChatSeeder::class);
+        // // $this->call(ChatSeeder::class);
+        $this->call(ChatsSeeder::class);
+        $this->call(NontificationSeeder::class);
+
+        
     }
 }

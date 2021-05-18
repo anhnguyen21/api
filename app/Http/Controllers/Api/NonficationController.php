@@ -28,10 +28,21 @@ class NonficationController extends Controller
     //     return $notification;
     // }
     public function getNotification($id){
-        $notification = DB::select('select u.*,n.*,p.* from nonfications as n , users as u, product as p where n.id_user=u.id and n.id_product = p.id'  );
+        $notification = DB::select('select u.*,n.*,p.* from nonfications as n , users as u, product as p where n.id_user=u.id and n.id_product = p.id and u.id='.$id);
         return $notification;
-        echo "get notification";
+    }
 
+    public function getNotificationOfDeliver(){
+        $notification = DB::select('select u.*,n.*,p.* from nonfications as n , users as u, product as p where n.id_user=u.id and n.id_product = p.id and n.type=3');
+        return $notification;
+    }
+
+    public function getNotificationShop($id){
+        $notification = DB::select('select n.*,p.* from nonfications as n,
+        product as p where n.id_product = p.id and p.id_shop ='.$id);
+        return $notification;
+        $notification = DB::select('select u.*,n.*,p.* from nonfications as n , users as u, product as p where n.id_user=u.id and n.id_product = p.id and u.id='.$id);
+        return $notification;
     }
 
     /**
@@ -82,7 +93,11 @@ class NonficationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
+
     {
-        //
+        $nonti = nonfication::find($id);
+        $nonti->delete();
+        return response()->json($nonti);
+        echo "delete success";
     }
 }

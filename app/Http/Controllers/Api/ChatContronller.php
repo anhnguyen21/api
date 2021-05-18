@@ -73,6 +73,7 @@ class ChatContronller extends Controller
         $chat->id_user=$user_id;
         $chat->id_role=1;
         $chat->id_admin=1;
+        $chat->id_shop=1;
         $chat->content=$text;
         $chat->time=date_create()->format('Y-m-d H:i:s');
         $chat->save();

@@ -37,7 +37,7 @@ Route::post('loginShop',[LoginController::class,'loginShop']);
 //Profile
 Route::put('profile/{id}',[ProfileControler::class,'update']);
 Route::get('profileAdmin/{id}',[ProfileControler::class,'getProfile']);
-Route::patch('updateProfile/{id}',[ProfileControler::class,'updateProfile']);
+Route::patch('updateProfile/{id}',[ProfileControler::class,'updateEditAdmin']);
 Route::post('uploadImg',[ProfileControler::class,'uploadImage']);
 Route::get('uploadImg',[ProfileControler::class,'uploadImage']);
 Route::get('profileAd',[ProfileControler::class,'profileAdmin']);
@@ -76,7 +76,9 @@ Route::put('order/{id}',[OrderController::class,'update']);
 Route::put('orderUpdate/{id}',[OrderController::class,'updateAdmin']);
 Route::get('order_show/{id}',[OrderController::class,'show']);
 Route::get('detail_order/{id}',[OrderController::class,'getOrderDetailsAdmin']);
-
+Route::put('orderUpdate/{id}',[OrderController::class,'updateAdmin']);
+Route::post('addpro',[OrderController::class,'getAddPro']);
+Route::delete('orders/{id}',[OrderController::class, 'deleteOrder']);
 Route::post('deleteproducttoorder',[OrderController::class,'deleteProductInOrder']);
 Route::delete('order/{id}',[OrderController::class, 'destroy']);
 
@@ -92,8 +94,13 @@ Route::post('heart',[HeartController::class,'addProductHeart']);
 
 //Nonfication
 Route::get('nofication',[NonficationController::class,'index']);
+Route::get('nofication/deliver',[NonficationController::class,'getNotificationOfDeliver']);
 Route::get('nofication/{id}',[NonficationController::class,'getNotification']);
+Route::get('noficationShop/{id}',[NonficationController::class,'getNotificationShop']);
 Route::post('notification',[NonficationController::class,'store']);
+Route::delete('nontification/{id}',[NonficationController::class, 'destroy']);
+
+
 
 //Chat
 Route::get('chat',[ChatContronller::class,'index']);
@@ -116,6 +123,8 @@ Route::post('searchchat',[ChatContronller::class,'search']);
 
 //Progress
 Route::get('progress/{id}',[ProgressController::class,'getProgress']);
+Route::get('progress/waiting/{id}',[ProgressController::class,'getProgressWaiting']);
+Route::get('progress/suscess/{id}',[ProgressController::class,'getProgressSucess']);
 Route::put('progress/{id}',[ProgressController::class,'update']);
 
 //PromotionContronller

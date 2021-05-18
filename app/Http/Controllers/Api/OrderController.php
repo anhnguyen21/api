@@ -9,6 +9,9 @@ use App\Models\order;
 use App\Models\progress;
 use App\Models\nonfication;
 use App\Models\product;
+use App\Models\users;
+use App\Models\paymentOder;
+use App\Models\payment;
 
 class OrderController extends Controller
 {
@@ -57,6 +60,30 @@ class OrderController extends Controller
     public function getAddProduct(Request $request)
     {
         echo strval($request->get('id_user'));
+        $pro=DB::select('select id , quantity, id_status from orders where id_status=0 and id_product ='.($request->get('id_pro')).' and id_user='.($request->get('id_user')));
+        $this->notificationAddProduct($request->get('id_user'),$request->get('id_pro'));
+        if($pro==null){
+            $order=new order();
+            $order->id_product=$request->get('id_pro');
+            $order->id_user=$request->get('id_user');
+            $order->id_shop=$request->get('id_shop');
+            $order->id_status=0;
+            $order->quantity=1;
+            $order->save();
+            echo "add new product sussess";
+            $this->MessageAddProduct($request->get('token_device'));
+        }else if($pro[0]->id_status === 0){
+            order::where("id", $pro[0]->id)->update([
+              "quantity" =>$pro[0]->quantity+1
+          ]);
+          echo "increase quantity of product";
+          $this->MessageAddProduct($request->get('token_device'));
+        }
+    }
+
+    public function getAddPro(Request $request)
+    {
+        echo strval($request->get('id_user'));
         $pro=DB::select('select id , quantity from orders where id_product ='.($request->get('id_pro')).' and id_user='.($request->get('id_user')));
         $this->notificationAddProduct($request->get('id_user'),$request->get('id_pro'));
         if($pro==null){
@@ -64,17 +91,15 @@ class OrderController extends Controller
             $order->id_product=$request->get('id_pro');
             $order->id_user=$request->get('id_user');
             $order->id_shop=$request->get('id_shop');
-            $order->id_orderStatus=1;
+            $order->id_status=0;
             $order->quantity=1;
             $order->save();
             echo "add new product sussess";
-            $this->MessageAddProduct();
         }else{
             order::where("id", $pro[0]->id)->update([
               "quantity" =>$pro[0]->quantity+1
           ]);
           echo "increase quantity of product";
-          $this->MessageAddProduct();
         }
     }
 
@@ -90,8 +115,8 @@ class OrderController extends Controller
         return response()->json($notification,200);
     }
 
-    function MessageAddProduct(){
-        $token = "dDR233eFQpytnnppn0ijxJ:APA91bG5xIxUhQ-pEbpNMOHrklqde6L0JwdRW6UF8h4gkMjYvdIjMUzBjutgHk5IhR0GQz-im-Blav_NZwt4v_Dxi0kK1TJbPmbHwIUPtth-l0K174p8ruwszMbnuLajvJkW35Rg12Q-";  
+    function MessageAddProduct($token_device){
+        $token =$token_device;  
         $from = "AAAA9kCHXEc:APA91bHGrJhFm8Ft0Tsh9XGjEFSvOaMpvLaI01EvdXttXhRabQVrdnjpHUsvFvCVcxLIzevVVuuOwxzhW0Gfw_p8i5EBS5n3cDj44JfdI_F4hH82R0QBo2-tR-CtyDynd-BPpVtCw0PY";
         $msg = array
               (
@@ -138,7 +163,7 @@ class OrderController extends Controller
     }
     public function getOrderDetails($id)
     {
-        $order = DB::select('select o.quantity as quantityCart, p.* from product as p , orders as o where p.id =o.id_product and o.id_user ='.$id);
+        $order = DB::select('select o.quantity as quantityCart, p.* from product as p , orders as o where o.id_status=0 and p.id =o.id_product and o.id_user ='.$id);
         return $order;
     }
     public function getOrderDetailsAdmin($id)
@@ -155,18 +180,51 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $payment=new payment();
+        $payment->user_id=$request->get('user_id');
+        $payment->name_recive=$request->get('name_recive');
+        $payment->total=$request->get('total');
+        $payment->address=$request->get('address');
+        $payment->save();
         $order=DB::select('select * from orders where id_user='.$id);
         json_encode($order, TRUE);
         for($i=0 ; $i<count($order) ; $i++){
-            if($order[$i]->id_orderStatus = 1){
-                $order[$i]->id_orderStatus = $order[$i]->id_orderStatus + 1;
-                DB::table('orders')->where('id', $order[$i]->id)->update(['id_orderStatus' => $order[$i]->id_orderStatus]);
+            if($order[$i]->id_status == 0){
+                $order[$i]->id_status = $order[$i]->id_status + 1;
+                DB::table('orders')->where('id', $order[$i]->id)->update(['id_status' => $order[$i]->id_status]);
+                $paymentOder=new paymentOder();
+                $paymentOder->payment_id=$payment->id;
+                $paymentOder->order_id=$order[$i]->id;
+                $paymentOder->save();
             }
         }
-        $this->MessageAddProduct();   
-        return $order;  
+        $this->notificationPayOrder($id);
+        $this->MessageAddProduct($request->get('token_device'));   
+        return $order;
+    }   
+
+    public function notificationPayOrder($id_user)
+    {
+        $notification = new nonfication();
+        $notification->id_product=0;
+        $notification->id_user=0;
+        $notification->type = 3;
+        $notification->content = 'Bạn vừa có thêm đơn hàng mới từ'." ".users::find($id_user)->account;
+        $notification->time = date_create()->format('Y-m-d H:i:s');
+        $notification->save();
+        return response()->json($notification,200);
     }
 
+    public function updateAdmin(Request $request, $id)
+    {
+        $orders = order::find($id);
+            $orders->order_status;
+            if($orders->order_status[0]->id < 5){
+                $orders->id_status = $orders->id_status + 1;
+                $orders->save();
+            }
+        return $orders;
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -190,5 +248,9 @@ class OrderController extends Controller
             DB::delete('delete from orders where id ='.$pro[0]->id);
             echo "delete product";
         }
+    }
+
+    public function deleteOrder($id){
+        return DB::delete('delete from orders where id ='.$id);
     }
 }

@@ -25,6 +25,18 @@ class ProgressController extends Controller
         return $progress;
     }
 
+    public function getProgressWaiting($id)
+    {
+        $progress = DB::select('SELECT * from orders as o, product as pro WHERE o.id_product = pro.id AND o.id_status IN (2,3,4) AND o.id_user ='.$id);
+        return $progress;
+    }
+
+    public function getProgressSucess($id)
+    {
+        $progress = DB::select('SELECT * from orders as o, product as pro WHERE o.id_product = pro.id AND o.id_status=5 AND o.id_user ='.$id);
+        return $progress;
+    }
+
     /**
      * Store a newly created resource in storage.
      *

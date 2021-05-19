@@ -28,12 +28,16 @@ class OrderController extends Controller
             $order->users;
             $order->order_status;
            }
-     return $orders;
+         return $orders;
+    }
+    public function getListOrder(){
+        $orders = DB::select('select pO.*, p.*, o.*,s.* from payment_order as pO, payment as p, orders as o , shop as s where pO.payment_id = p.id and o.id_shop = s.id');
+        return $orders;
     }
     public function getAllOrder($id_user)
     {
-        $orders = DB::select('select o.*,s.* from orders as o , shop as s where o.id_shop = s.id and s.id_user ='.$id_user);
-      return $orders;
+        $orders = DB::select('select pO.*, p.*, o.*,s.* from payment_order as pO, payment as p, orders as o , shop as s where pO.payment_id = p.id and o.id_shop = s.id and s.id_user ='.$id_user);
+        return $orders;
     }
     /**
      * Store a newly created resource in storage.
@@ -152,11 +156,10 @@ class OrderController extends Controller
     }
     
     public function updateAdmin(Request $request, $id)
-    {
+    {  
         $orders = order::find($id);
-            $orders->order_status;
             if($orders->order_status[0]->id < 5){
-                $orders->id_orderStatus = $orders->id_orderStatus + 1;
+                $orders->id_status = $orders->id_status + 1;
                 $orders->save();
             }
         return $orders;
@@ -213,17 +216,6 @@ class OrderController extends Controller
         $notification->time = date_create()->format('Y-m-d H:i:s');
         $notification->save();
         return response()->json($notification,200);
-    }
-
-    public function updateAdmin(Request $request, $id)
-    {
-        $orders = order::find($id);
-            $orders->order_status;
-            if($orders->order_status[0]->id < 5){
-                $orders->id_status = $orders->id_status + 1;
-                $orders->save();
-            }
-        return $orders;
     }
     /**
      * Remove the specified resource from storage.

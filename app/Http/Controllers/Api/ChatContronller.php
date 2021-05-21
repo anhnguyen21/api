@@ -60,9 +60,9 @@ class ChatContronller extends Controller
      //  $user = DB::select('select c.*,u.* from chat as c , users as u where c.id_user=u.id');
         return $user;
     }
-    public function getchatCustomeradmin(Request $request)
+    public function getchatCustomeradmin($id)
     {
-        $chat = DB::select('select u.*,c.* from chat as c , users as u where c.id_user=u.id');
+        $chat = DB::select('select u.*,c.* from chat as c , users as u where c.id_user=u.id and u.id ='.$id);
         return $chat;
         echo "get message user to admin";
     }

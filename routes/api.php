@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\PromotionContronller;
 use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\ProfileControler;
 use App\Http\Controllers\Api\recommentController;
+use App\Http\Controllers\Api\ShopController;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
@@ -66,17 +67,23 @@ Route::get('lastWeekChart',[ProductController::class,'LastweekChart']);
 Route::get('getWeek/{counter}',[ProductController::class,'getDayofYear']);
 
 Route::get('getNumber',[ProductController::class,'getNumberWeek']);
+ /// SHop
+ Route::get('shop',[ShopController::class,'getShop']);
+ //Route::get('shopChart',[ShopController::class,'getShopChart']);
+ Route::delete('shop/{id}',[ShopController::class,'destroy']);
+ 
+
 
 //Order
 Route::get('Allorder/{id_user}',[OrderController::class,'getAllOrder']);
+Route::get('listOrder',[OrderController::class,'getListOrder']);
 Route::get('order',[OrderController::class,'getOrder']);
 Route::get('order/{id}',[OrderController::class,'getOrderDetails']);
-Route::get('listOrder',[OrderController::class,'getListOrder']);
 Route::post('addproducttoorder',[OrderController::class,'getAddProduct']);
 Route::put('order/{id}',[OrderController::class,'update']);
+Route::put('orderUpdate/{id}',[OrderController::class,'updateAdmin']);
 Route::get('order_show/{id}',[OrderController::class,'show']);
 Route::get('detail_order/{id}',[OrderController::class,'getOrderDetailsAdmin']);
-Route::put('orderUpdate/{id}',[OrderController::class,'updateAdmin']);
 Route::post('addpro',[OrderController::class,'getAddPro']);
 Route::delete('orders/{id}',[OrderController::class, 'deleteOrder']);
 Route::post('deleteproducttoorder',[OrderController::class,'deleteProductInOrder']);

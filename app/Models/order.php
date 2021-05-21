@@ -18,6 +18,6 @@ class order extends Model
         return $this->hasMany("App\Models\users","id","id_user");
      }
      function order_status(){
-        return $this->hasMany("App\Models\order_status","id","id_orderStatus");
+        return $this->hasMany("App\Models\order_status","id","id_status");
      }
 }

@@ -95,6 +95,7 @@ class ProductController extends Controller
         }
         return $userstmonth;
     }
+
      public function getBarOrderChart(){
       $orders= order::select(DB::raw('extract(month from "created_at") as month'),DB::raw('COUNT(id) as sum'))
       ->whereYear('created_at', now()->year)

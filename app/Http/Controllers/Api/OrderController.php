@@ -28,16 +28,33 @@ class OrderController extends Controller
             $order->users;
             $order->order_status;
            }
-     return $orders;
-    }
-    public function getAllOrder($id_user)
-    {
-        $orders = DB::select('select pO.*, p.*, o.*,s.* from payment_order as pO, payment as p, orders as o , shop as s where pO.payment_id = p.id and o.id_shop = s.id and s.id_user ='.$id_user);
-        return $orders;
+         return $orders;
     }
 
     public function getListOrder(){
-        $orders = DB::select('select pO.*, p.*, o.*,s.* from payment_order as pO, payment as p, orders as o , shop as s where pO.payment_id = p.id and o.id_shop = s.id');
+  
+        // $orders = DB::table('payment_order')
+        // ->join('payment', 'payment.id', '=', 'payment_order.payment_id')
+        // ->join('orders', 'orders.id', '=', 'payment_order.order_id')
+        // ->groupBy('payment_order.payment_id')->get();
+        // return $orders;
+        $orders = DB::select('select pO.*, p.*, o.*, s.*, oS.*
+        from payment_order as pO join payment as p on p.id = pO.payment_id
+        join orders as o on o.id = pO.order_id
+        inner join order_status as oS on oS.id = o.id_status
+        inner join shop as s on s.id = o.id_shop
+        group by pO.payment_id');
+        return $orders;
+    } 
+    public function getAllOrder($id_user)
+    {   
+        $orders = DB::select('select pO.*, p.*, o.*, s.*, oS.*
+        from payment_order as pO join payment as p on p.id = pO.payment_id
+        join orders as o on o.id = pO.order_id
+        inner join order_status as oS on oS.id = o.id_status
+        inner join shop as s on s.id = o.id_shop
+        where s.id_user = '.$id_user.'
+        group by pO.payment_id');
         return $orders;
     }
     /**
@@ -155,7 +172,16 @@ class OrderController extends Controller
         dd($result);
         curl_close( $ch );
     }
-
+    
+    public function updateAdmin(Request $request, $id)
+    {  
+        $orders = order::find($id);
+            if($orders->order_status[0]->id < 5){
+                $orders->id_status = $orders->id_status + 1;
+                $orders->save();
+            }
+        return $orders;
+    }
     public function getOrderDetails($id)
     {
         $order = DB::select('select o.quantity as quantityCart, p.* from product as p , orders as o where o.id_status=0 and p.id =o.id_product and o.id_user ='.$id);
@@ -208,17 +234,6 @@ class OrderController extends Controller
         $notification->time = date_create()->format('Y-m-d H:i:s');
         $notification->save();
         return response()->json($notification,200);
-    }
-
-    public function updateAdmin(Request $request, $id)
-
-    {  
-        $orders = order::find($id);
-            if($orders->order_status[0]->id < 5){
-                $orders->id_status = $orders->id_status + 1;
-                $orders->save();
-            }
-        return $orders;
     }
     /**
      * Remove the specified resource from storage.

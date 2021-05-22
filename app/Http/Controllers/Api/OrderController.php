@@ -33,19 +33,19 @@ class OrderController extends Controller
 
     public function getListOrder(){
   
-        // $orders = DB::table('payment_order')
-        // ->join('payment', 'payment.id', '=', 'payment_order.payment_id')
-        // ->join('orders', 'orders.id', '=', 'payment_order.order_id')
-        // ->groupBy('payment_order.payment_id')->get();
-        // return $orders;
-        $orders = DB::select('select po.*, p.*, o.*, s.*, os.*
-        from payment_order as po 
-        inner join payment as p on p.id = po.payment_id
-        inner join orders as o on o.id = po.order_id
-        inner join order_status as os on os.id = o.id_status
-        inner join shop as s on s.id = o.id_shop
-        group by po.payment_id');
+        $orders = DB::table('payment_order')
+        ->join('payment', 'payment.id', '=', 'payment_order.payment_id')
+        ->join('orders', 'orders.id', '=', 'payment_order.order_id')
+        ->groupBy('payment_order.payment_id')->get();
         return $orders;
+        // $orders = DB::select('select po.*, p.*, o.*, s.*, os.*
+        // from payment_order as po 
+        // inner join payment as p on p.id = po.payment_id
+        // inner join orders as o on o.id = po.order_id
+        // inner join order_status as os on os.id = o.id_status
+        // inner join shop as s on s.id = o.id_shop
+        // group by po.payment_id');
+        // return $orders;
     } 
     public function getAllOrder($id_user)
     {   

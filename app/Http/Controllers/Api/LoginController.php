@@ -57,17 +57,20 @@ class LoginController extends Controller
     public function loginShop(Request $request){
         $name = $request->input('account');
 		$password = $request->input('password'); 
-        if (Auth::attempt(['account' => $name, 'password' => $password])) {
-            echo "123";
-            if( auth()->user()->remember_token == 1){
-                $user_id= Auth::user()->id;
-                $data = array("idToken" => $user_id);
-                return response()->json($data,200);
-            }
-		}else{
-			$array = array("data" => null);
-			return response()->json($array,400);
-		}   
+        DB::table('users')
+            ->where('id', 3)
+            ->update(['remember_token' => "1"]);
+        // if (Auth::attempt(['account' => $name, 'password' => $password])) {
+        //     echo "123";
+        //     if( auth()->user()->remember_token == 1){
+        //         $user_id= Auth::user()->id;
+        //         $data = array("idToken" => $user_id);
+        //         return response()->json($data,200);
+        //     }
+		// }else{
+		// 	$array = array("data" => null);
+		// 	return response()->json($array,400);
+		// }   
     }
     public function loginAdmin(Request $request){
         $name = $request->input('account');

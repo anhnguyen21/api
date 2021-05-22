@@ -38,23 +38,25 @@ class OrderController extends Controller
         // ->join('orders', 'orders.id', '=', 'payment_order.order_id')
         // ->groupBy('payment_order.payment_id')->get();
         // return $orders;
-        $orders = DB::select('select pO.*, p.*, o.*, s.*, oS.*
-        from payment_order as pO join payment as p on p.id = pO.payment_id
-        join orders as o on o.id = pO.order_id
-        inner join order_status as oS on oS.id = o.id_status
+        $orders = DB::select('select po.*, p.*, o.*, s.*, os.*
+        from payment_order as po 
+        inner join payment as p on p.id = po.payment_id
+        inner join orders as o on o.id = po.order_id
+        inner join order_status as os on os.id = o.id_status
         inner join shop as s on s.id = o.id_shop
-        group by pO.payment_id');
+        group by po.payment_id');
         return $orders;
     } 
     public function getAllOrder($id_user)
     {   
-        $orders = DB::select('select pO.*, p.*, o.*, s.*, oS.*
-        from payment_order as pO join payment as p on p.id = pO.payment_id
-        join orders as o on o.id = pO.order_id
-        inner join order_status as oS on oS.id = o.id_status
+        $orders = DB::select('select po.*, p.*, o.*, s.*, os.*
+        from payment_order as po 
+        inner join payment as p on p.id = po.payment_id
+        inner join orders as o on o.id = po.order_id
+        inner join order_status as os on os.id = o.id_status
         inner join shop as s on s.id = o.id_shop
         where s.id_user = '.$id_user.'
-        group by pO.payment_id');
+        group by po.payment_id');
         return $orders;
     }
     /**

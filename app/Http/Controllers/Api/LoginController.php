@@ -57,15 +57,12 @@ class LoginController extends Controller
     public function loginShop(Request $request){
         $name = $request->input('account');
 		$password = $request->input('password'); 
-        echo $name;
-        echo $password;
         if (Auth::attempt(['account' => $name, 'password' => $password])) {
-            // if( auth()->user()->remember_token == 1){
+            if( auth()->user()->remember_token == 1){
                 $user_id= Auth::user()->id;
-                $cookie=Cookie::make('user', $name, 30);
                 $data = array("idToken" => $user_id);
-                return response()->json($data,200)->cookie($cookie);
-            // }
+                return response()->json($data,200);
+            }
 		}else{
 			$array = array("data" => null);
 			return response()->json($array,400);
@@ -89,7 +86,7 @@ class LoginController extends Controller
             
 		}else{
 		    
-			$array = array("data" =>$validator->errors());
+			$array = array("data" =>null);
 			return response()->json($array,400);
 		}
         

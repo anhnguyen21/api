@@ -59,11 +59,11 @@ class LoginController extends Controller
 		$password = $request->input('password'); 
         if (Auth::attempt(['account' => $name, 'password' => $password])) {
             echo "123";
-            // if( auth()->user()->remember_token == 1){
+            if( auth()->user()->remember_token == 1){
                 $user_id= Auth::user()->id;
                 $data = array("idToken" => $user_id);
-                return response()->json($data,200)
-            // }
+                return response()->json($data,200);
+            }
 		}else{
 			$array = array("data" => null);
 			return response()->json($array,400);
@@ -87,7 +87,7 @@ class LoginController extends Controller
             
 		}else{
 		    
-			$array = array("data" =>$validator->errors());
+			$array = array("data" =>null);
 			return response()->json($array,400);
 		}
         

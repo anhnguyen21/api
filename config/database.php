@@ -74,6 +74,8 @@ return [
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
+            'strict' => false,
+            'engine' => null,
             'schema' => 'public',
             'sslmode' => 'prefer',
         ],

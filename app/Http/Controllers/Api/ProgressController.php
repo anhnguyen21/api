@@ -46,7 +46,8 @@ class ProgressController extends Controller
         $orders = DB::table('payment_order')
         ->join('payment', 'payment.id', '=', 'payment_order.payment_id')
         ->join('orders', 'orders.id', '=', 'payment_order.order_id')
-        ->groupBy('payment_order.payment_id')->get();
+        ->get()
+        ->groupBy('payment_order.payment_id');
         return $orders;
     }
 

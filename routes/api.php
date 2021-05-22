@@ -76,7 +76,7 @@ Route::get('getNumber',[ProductController::class,'getNumberWeek']);
 
 //Order
 Route::get('Allorder/{id_user}',[OrderController::class,'getAllOrder']);
-Route::get('listOrder',[OrderController::class,'getListOrder']);
+Route::get('orderadmin',[ProgressController::class,'getPaymentAdmin']);
 Route::get('order',[OrderController::class,'getOrder']);
 Route::get('order/{id}',[OrderController::class,'getOrderDetails']);
 Route::post('addproducttoorder',[OrderController::class,'getAddProduct']);

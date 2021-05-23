@@ -103,7 +103,7 @@ Route::post('heart',[HeartController::class,'addProductHeart']);
 Route::get('nofication',[NonficationController::class,'index']);
 Route::get('nofication/deliver',[NonficationController::class,'getNotificationOfDeliver']);
 Route::get('nofication/{id}',[NonficationController::class,'getNotification']);
-Route::get('noficationShop',[NonficationController::class,'getNotificationOfDeliver']);
+Route::get('noficationShop/{id}',[NonficationController::class,'getNotificationShop']);
 Route::post('notification',[NonficationController::class,'store']);
 Route::delete('nontification/{id}',[NonficationController::class, 'destroy']);
 

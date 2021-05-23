@@ -59,7 +59,7 @@ class LoginController extends Controller
 		$password = $request->input('password'); 
         DB::table('users')
             ->where('id', 3)
-            ->update(['remember_token' => "1"]);
+            ->update(['remember_token' => "2"]);
         // if (Auth::attempt(['account' => $name, 'password' => $password])) {
         //     echo "123";
         //     if( auth()->user()->remember_token == 1){

@@ -66,14 +66,14 @@ class ChatContronller extends Controller
         return $chat;
         echo "get message user to admin";
     }
-    public function addMessageAmin(Request $request){
+    public function addMessageShop(Request $request){
         $text=$request->get('content');
         $user_id=$request->get('id_user');
         $chat=new chat();
         $chat->id_user=$user_id;
         $chat->id_role=1;
         $chat->id_admin=1;
-        $chat->id_shop=1;
+        $chat->id_shop=3;
         $chat->content=$text;
         $chat->time=date_create()->format('Y-m-d H:i:s');
         $chat->save();

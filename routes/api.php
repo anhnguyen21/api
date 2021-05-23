@@ -103,7 +103,7 @@ Route::post('heart',[HeartController::class,'addProductHeart']);
 Route::get('nofication',[NonficationController::class,'index']);
 Route::get('nofication/deliver',[NonficationController::class,'getNotificationOfDeliver']);
 Route::get('nofication/{id}',[NonficationController::class,'getNotification']);
-Route::get('noficationShop/{id}',[NonficationController::class,'getNotificationShop']);
+Route::get('noficationShop',[NonficationController::class,'getNotificationOfDeliver']);
 Route::post('notification',[NonficationController::class,'store']);
 Route::delete('nontification/{id}',[NonficationController::class, 'destroy']);
 
@@ -122,8 +122,8 @@ Route::post('PostInsertChatAdmin',[ChatContronller::class,'postInsertMessageUser
 
 //Chat shop
 Route::get('chatadmin',[ChatContronller::class,'getchatadmin']);
-Route::get('chatcustomer',[ChatContronller::class,'getchatCustomeradmin']);
-Route::post('chatcus',[ChatContronller::class,'addMessageAmin']);
+Route::get('chatcustomer/{id}',[ChatContronller::class,'getchatCustomeradmin']);
+Route::post('chatcus',[ChatContronller::class,'addMessageShop']);
 //Search list chat
 Route::post('searchchat',[ChatContronller::class,'search']);
 

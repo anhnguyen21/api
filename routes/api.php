@@ -122,7 +122,7 @@ Route::post('PostInsertChatAdmin',[ChatContronller::class,'postInsertMessageUser
 
 //Chat shop
 Route::get('chatadmin',[ChatContronller::class,'getchatadmin']);
-Route::get('chatcustomer/{id}',[ChatContronller::class,'getchatCustomeradmin']);
+Route::get('chatcustomer',[ChatContronller::class,'getchatCustomeradmin']);
 Route::post('chatcus',[ChatContronller::class,'addMessageShop']);
 //Search list chat
 Route::post('searchchat',[ChatContronller::class,'search']);

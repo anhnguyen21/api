@@ -57,13 +57,9 @@ class LoginController extends Controller
     public function loginShop(Request $request){
         $name = $request->input('account');
 		$password = $request->input('password'); 
-        if (Auth::attempt(['account' => $name, 'password' => $password])) {
-            echo "123";
-            if( auth()->user()->remember_token == 1){
-                $user_id= Auth::user()->id;
-                $data = array("idToken" => $user_id);
-                return response()->json($data,200);
-            }
+        if ($name == 'hothion' && $password == '123') {
+            $data = array("idToken" => 1);
+            return response()->json($data,200);
 		}else{
 			$array = array("data" => null);
 			return response()->json($array,400);

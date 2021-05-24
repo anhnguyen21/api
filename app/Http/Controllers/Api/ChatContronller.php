@@ -20,16 +20,15 @@ class ChatContronller extends Controller
     }
 
     public function getMessageUserToShop(Request $request){
-        $chat = DB::select('select u.*,c.* from chat as c , users as u where c.id_user='. $request->get('id_user').' and c.id_admin='. $request->get('id_admin'));
+        $chat = DB::select('select u.*,c.* from chat as c , users as u where c.id_user = u.id and c.id_user='. $request->get('id_user').' and c.id_shop='. $request->get('id_shop'));
         return $chat;
-        echo "get message user to admin";
     }
     
     public function getInsertMessageUserToShop(Request $request){
         $chat=new chat();
-        $chat->id_admin=$request->get('id_admin');
+        $chat->id_admin=0;
         $chat->id_user=$request->get('id_user');
-        $chat->id_shop=$request->get('id_user');
+        $chat->id_shop=$request->get('id_shop');
         $chat->id_role=0;
         $chat->content=$request->get('content');
         $chat->time=date_create()->format('Y-m-d H:i:s');

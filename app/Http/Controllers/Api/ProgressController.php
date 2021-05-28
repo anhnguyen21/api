@@ -21,19 +21,19 @@ class ProgressController extends Controller
 
     public function getProgress($id)
     {
-        $progress = DB::select('SELECT * from orders as o, product as pro, order_status as os WHERE os.id = o.id_status AND o.id_product = pro.id AND o.id_user ='.$id);
+        $progress = DB::select('SELECT o.*, pro.*, sh.*, o.quantity as quantityCart, pro.name as nameproduct from orders as o, product as pro, shop as sh WHERE sh.id = o.id_shop AND o.id_product = pro.id AND o.id_user ='.$id);
         return $progress;
     }
 
     public function getProgressWaiting($id)
     {
-        $progress = DB::select('SELECT * from orders as o, product as pro, order_status as os, shop as sh WHERE os.id = o.id_status AND o.id_product = pro.id AND o.id_status IN (3,4) AND sh.id = o.id_shop AND o.id_user ='.$id);
+        $progress = DB::select('SELECT * from payment as p, payment_order as po, orders as o, shop as sh , order_status as os WHERE os.id = o.id_status AND p.id = po.payment_id AND o.id_status IN (1,2,3,4) AND po.order_id= o.id AND o.id_shop= sh.id AND p.user_id ='.$id);
         return $progress;
     }
 
     public function getProgressSucess($id)
     {
-        $progress = DB::select('SELECT * from orders as o, product as pro, order_status as os WHERE os.id = o.id_status AND o.id_product = pro.id AND o.id_status=5 AND o.id_user ='.$id);
+        $progress = DB::select('SELECT * from payment as p, payment_order as po, orders as o, shop as sh , order_status as os WHERE os.id = o.id_status AND p.id = po.payment_id AND o.id_status = 5 AND po.order_id= o.id AND o.id_shop= sh.id AND p.user_id ='.$id);
         return $progress;
     }
 

@@ -116,6 +116,7 @@ Route::get('chat',[ChatContronller::class,'index']);
 Route::get('chat/{id}',[ChatContronller::class,'index']);
 Route::post('getChat',[ChatContronller::class,'getMessageUserToShop']);
 Route::post('getInsertChat',[ChatContronller::class,'getInsertMessageUserToShop']);
+Route::get('chatadmin/{id}',[ChatContronller::class,'getMessageShopWithUser']);
 
 //Chat Admin
 // Route::get('chat',[ChatContronller::class,'index']);

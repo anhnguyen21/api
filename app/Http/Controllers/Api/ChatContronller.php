@@ -23,6 +23,11 @@ class ChatContronller extends Controller
         $chat = DB::select('select u.*,c.* from chat as c , users as u where c.id_user = u.id and c.id_user='. $request->get('id_user').' and c.id_shop='. $request->get('id_shop'));
         return $chat;
     }
+
+    public function getMessageShopWithUser($id){
+        $chat = DB::select('select u.*,c.* from chat as c , users as u, shop as sh where c.id_shop = sh.id and c.id_user = u.id and sh.id_user='.$id);
+        return $chat;
+    }
     
     public function getInsertMessageUserToShop(Request $request){
         $chat=new chat();

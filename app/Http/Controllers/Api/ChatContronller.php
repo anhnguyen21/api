@@ -76,14 +76,12 @@ class ChatContronller extends Controller
         $chat=new chat();
         $chat->id_user=$user_id;
         $chat->id_role=1;
-        $chat->id_admin=1;
+        $chat->id_admin=0;
         $chat->id_shop=3;
         $chat->content=$text;
         $chat->time=date_create()->format('Y-m-d H:i:s');
         $chat->save();
         echo "add message success";
-       
-      
     }
     public function search(Request $request)
         {

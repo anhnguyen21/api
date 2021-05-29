@@ -78,9 +78,8 @@ class OrderController extends Controller
      */
     public function show()
     {
-        $pro=DB::select('UPDATE shop
-        SET id_user = 1
-        WHERE id = 3');
+        $pro=DB::select('DELETE FROM chat
+        WHERE id = 6');
         return $pro;
     }
     

@@ -230,7 +230,7 @@ class OrderController extends Controller
     {
         $notification = new nonfication();
         $notification->id_product=0;
-        $notification->id_user=0;
+        $notification->id_user=$id_user;
         $notification->type = 3;
         $notification->content = 'Bạn vừa có thêm đơn hàng mới từ'." ".users::find($id_user)->account;
         $notification->time = date_create()->format('Y-m-d H:i:s');

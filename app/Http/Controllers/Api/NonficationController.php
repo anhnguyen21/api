@@ -31,7 +31,7 @@ class NonficationController extends Controller
 
     public function getNotificationShop(){
         $notification = DB::select('select u.*,n.* from nonfications as n , users as u
-        where n.id_user=u.id and n.type = 2');
+        where n.id_user=u.id and n.type = 3');
         return $notification;
     }
 

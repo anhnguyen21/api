@@ -22,7 +22,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //Accounts
 Route::get('account',[LoginController::class, 'getAccount']);
-Route::post('account',[LoginController::class, 'register']);
+Route::post('account',[LoginController::class, 'registerGoogle']);
+Route::post('register',[LoginController::class, 'register']);
 Route::PUT('uploadImageUser/{id}',[LoginController::class, 'uploadImageUser']);
 Route::get('account/{id}',[LoginController::class, 'showAccount']);
 Route::delete('account/{id}',[LoginController::class, 'destroyAccount']);
@@ -88,6 +89,7 @@ Route::post('addpro',[OrderController::class,'getAddPro']);
 Route::delete('orders/{id}',[OrderController::class, 'deleteOrder']);
 Route::post('deleteproducttoorder',[OrderController::class,'deleteProductInOrder']);
 Route::delete('order/{id}',[OrderController::class, 'destroy']);
+Route::get('updateorder',[OrderController::class,'show']);
 
 //Review
 Route::get('review',[ReviewController::class,'index']);

@@ -76,9 +76,12 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $pro=DB::select('UPDATE shop
+        SET id_user = 1
+        WHERE id = 3');
+        return $pro;
     }
     
     public function getAddProduct(Request $request)

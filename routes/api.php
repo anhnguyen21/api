@@ -43,6 +43,7 @@ Route::patch('updateProfile/{id}',[ProfileControler::class,'updateEditAdmin']);
 Route::post('uploadImg',[ProfileControler::class,'uploadImage']);
 Route::get('uploadImg',[ProfileControler::class,'uploadImage']);
 Route::get('profileAd',[ProfileControler::class,'profileAdmin']);
+Route::put('profile/users/{id}',[ProfileControler::class,'updateProfi']);
 
 //Products
 Route::get('Allproducts/{id_user}',[ProductController::class,'getALlProduct']);

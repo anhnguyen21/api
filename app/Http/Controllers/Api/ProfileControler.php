@@ -38,7 +38,7 @@ class ProfileControler extends Controller
         $userfind->img =$request->img;
         $userfind->save();
         echo($userfind);
-}
+    }
 
 public function updateProfile(Request $request){
     $user = auth('api')->user();
@@ -113,6 +113,19 @@ public function profileAdmin(){
         // $users->gender =$request->gender;
         // $users->address =$request->address;
         $users->img =$request->img;
+        $users->save();
+        return response()->json($users);
+    }
+
+    public function updateProfi(Request $request, $id)
+    {
+        $users = users::find($id);
+        $users->firstName =$request->firstName;
+        $users->lastName =$request->lastName;
+        $users->phone =$request->phone;
+        $users->gender =$request->gender;
+        $users->birthday =$request->birthday;
+        $users->address =$request->address;
         $users->save();
         return response()->json($users);
     }

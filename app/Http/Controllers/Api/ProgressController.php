@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\progress;
+use App\Models\deliver;
+use App\Models\nonfication;
+use App\Models\payment;
+use App\Models\users;
 
 class ProgressController extends Controller
 {
@@ -60,6 +64,79 @@ class ProgressController extends Controller
     public function store(Request $request)
     {
         //
+    }
+    
+    public function ordertodeliver(Request $request) {
+        $deliver = new deliver();
+        $deliver->id_user = $request->get('user_id');
+        $deliver->id_payment = $request->get('id_payment');
+        $deliver->time = date_create()->format('Y-m-d H:i:s');
+        $deliver->save();
+        $order = DB::table('payment_order')
+        ->join('payment', 'payment.id', '=', 'payment_order.payment_id')
+        ->join('orders', 'orders.id', '=', 'payment_order.order_id')
+        ->where('payment_order.payment_id' ,$request->get('id_payment'))
+        ->get();
+        json_encode($order, TRUE);
+        for ($i = 0; $i < count($order); $i++) {
+            if ($order[$i]->id_status == 3) {
+                $order[$i]->id_status = $order[$i]->id_status + 1;
+                DB::table('orders')->where('id', $order[$i]->id)->update(['id_status' => $order[$i]->id_status]);
+            }
+        }
+        if ($order != null) {
+            $notification = new nonfication();
+            $notification->id_product = 0;
+            $notification->id_user = $request->get('user_id');
+            $notification->type = 2;
+            $notification->content = 'Đã có tài xế nhận đơn hàng của bạn' . " " . users::find($request->get('user_id'))->name;
+            $notification->time = date_create()->format('Y-m-d H:i:s');
+            $notification->save();
+
+            $notification = new nonfication();
+            $notification->id_product = 0;
+            $notification->id_user = $request->get('user_id');
+            $notification->type = 3;
+            $notification->content = 'Tài xế '.users::find($request->get('user_id'))->account.' đã nhận đơn hàng '.payment::find($request->get('id_payment'))->name_recive;
+            $notification->time = date_create()->format('Y-m-d H:i:s');
+            $notification->save();
+        }
+        $this->MessageAddProduct($request->get('token_device'));
+        return $order;
+    }
+
+    function MessageAddProduct($token_device)
+    {
+        $token = $token_device;
+        $from = "AAAA9kCHXEc:APA91bHGrJhFm8Ft0Tsh9XGjEFSvOaMpvLaI01EvdXttXhRabQVrdnjpHUsvFvCVcxLIzevVVuuOwxzhW0Gfw_p8i5EBS5n3cDj44JfdI_F4hH82R0QBo2-tR-CtyDynd-BPpVtCw0PY";
+        $msg = array(
+            'body'  => "Bạn mừa mới thêm sản phẩm vào giỏ hàng",
+            'title' => "Xác nhận sản phẩm",
+            'receiver' => 'erw',
+            'icon'  => "https://image.flaticon.com/icons/png/512/270/270014.png",/*Default Icon*/
+            'sound' => 'mySound'/*Default sound*/
+        );
+
+        $fields = array(
+            'to'        => $token,
+            'notification'  => $msg
+        );
+
+        $headers = array(
+            'Authorization: key=' . $from,
+            'Content-Type: application/json'
+        );
+        //#Send Reponse To FireBase Server 
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+        $result = curl_exec($ch);
+        dd($result);
+        curl_close($ch);
     }
 
     /**

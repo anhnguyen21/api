@@ -78,9 +78,19 @@ class OrderController extends Controller
      */
     public function show()
     {
-        $pro=DB::select('DELETE FROM chat
-        WHERE id = 6');
-        return $pro;
+        // $pro=DB::select("UPDATE shop
+        // SET name = 'Tiệm hoa Tươi Ohara Floral', address = '30 Phạm Quang Ảnh, An Hải Bắc, Sơn Trà, Đà Nẵng', image = 'https://lh5.googleusercontent.com/p/AF1QipMfanvyKqHem1LheEVvMgnYiXj_UrtpTlh-u8Lp=w408-h306-k-no', lat = '16.0627737', lng = '108.2026815'
+        // WHERE id = 1");
+        $pro1=DB::select("UPDATE shop
+         SET name = 'Shop Hoa Tươi Lưu Ly', address = '11 Đường Nguyễn Văn Thoại, Bắc Mỹ Phú, Sơn Trà, Đà Nẵng', image = 'https://lh5.googleusercontent.com/p/AF1QipNVOQx36nbSHGicGWTAhWuXrfjUR06K83Pqf4W1=w408-h544-k-no', lat = '16.0609083', lng = '108.2417068'
+         WHERE id = 2");
+        $pro2=DB::select("UPDATE shop
+          SET name = 'Hoa tươi Dũng Hà', address = '299 Trưng Nữ Vương, Hòa Thuận Đông, Hải Châu, Đà Nẵng', image = 'https://lh5.googleusercontent.com/p/AF1QipOzDS8abk_13I2-OkycikQexZXqjnb5a8mlGdkR=w408-h544-k-no', lat = '16.0556525', lng = '108.2206984'
+          WHERE id = 3");
+           $pro3=DB::select("UPDATE shop
+           SET name = 'Shop Hoa Sáp Đà Nẵng - Hoa Bốn Mùa', address = '779 Ngô Quyền, An Hải Bắc, Sơn Trà, Đà Nẵng', image = 'https://lh5.googleusercontent.com/p/AF1QipMM14mrIoitTIArJziJHnELCsKz5IYPdDdG-LXr=w408-h334-k-no', lat = '16.0597235', lng = '108.2417068'
+           WHERE id = 4");
+        return $pro1;
     }
     
     public function getAddProduct(Request $request)

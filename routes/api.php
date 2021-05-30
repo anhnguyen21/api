@@ -72,21 +72,22 @@ Route::get('getNumber',[ProductController::class,'getNumberWeek']);
  /// SHop
  Route::get('shop',[ShopController::class,'getShop']);
  Route::get('shop/{id}',[ShopController::class,'getOneShop']);
- Route::get('shop/all',[ShopController::class,'getAllShop']);
+ Route::get('all/shop',[ShopController::class,'getAllShop']);
  Route::delete('shop/{id}',[ShopController::class,'destroy']);
  
 
 
 //Order
 Route::get('Allorder/{id_user}',[OrderController::class,'getAllOrder']);
-Route::get('orderadmin',[ProgressController::class,'getPaymentAdmin']);
+Route::get('listOrder',[OrderController::class,'getListOrder']);
+Route::get('order_admin',[ProgressController::class,'getPaymentAdmin']);
 Route::get('order',[OrderController::class,'getOrder']);
 Route::get('order/{id}',[OrderController::class,'getOrderDetails']);
 Route::post('addproducttoorder',[OrderController::class,'getAddProduct']);
 Route::put('order/{id}',[OrderController::class,'update']);
 Route::put('orderUpdate/{id}',[OrderController::class,'updateAdmin']);
 Route::get('order_show/{id}',[OrderController::class,'show']);
-Route::get('detail_order/{id}',[OrderController::class,'getOrderDetailsAdmin']);
+Route::get('order/detailAdmin/{id_payment}',[OrderController::class,'getOrderDetailsAdmin']);
 Route::post('addpro',[OrderController::class,'getAddPro']);
 Route::delete('orders/{id}',[OrderController::class, 'deleteOrder']);
 Route::post('deleteproducttoorder',[OrderController::class,'deleteProductInOrder']);

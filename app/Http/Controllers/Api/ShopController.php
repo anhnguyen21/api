@@ -15,7 +15,8 @@ class ShopController extends Controller
     }
 
     public function getAllShop() {
-        return shop::all();
+        $shop = DB::select('select * from shop');
+        return $shop;
     }
 
     public function getOneShop($id) {

@@ -71,7 +71,8 @@ Route::get('getWeek/{counter}',[ProductController::class,'getDayofYear']);
 Route::get('getNumber',[ProductController::class,'getNumberWeek']);
  /// SHop
  Route::get('shop',[ShopController::class,'getShop']);
- //Route::get('shopChart',[ShopController::class,'getShopChart']);
+ Route::get('shop/{id}',[ShopController::class,'getOneShop']);
+ Route::get('shop/all',[ShopController::class,'getAllShop']);
  Route::delete('shop/{id}',[ShopController::class,'destroy']);
  
 

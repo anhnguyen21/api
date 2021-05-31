@@ -136,6 +136,9 @@ class ChatContronller extends Controller
      */
     public function destroy($id)
     {
-        //
+        $chat = chat::find($id);
+        $chat->delete();
+        return response()->json($chat);
+        echo "delete success";
     }
 }

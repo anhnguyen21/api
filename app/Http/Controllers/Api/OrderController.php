@@ -81,6 +81,8 @@ class OrderController extends Controller
         $pro=DB::select('DELETE FROM chat
         WHERE id = 6');
         return $pro;
+
+        // (UPDATE NHANVIEN SET DIACHI = 'Hanoi' WHERE ID = 3);
     }
     
     public function getAddProduct(Request $request)

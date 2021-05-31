@@ -42,7 +42,17 @@ class ProgressController extends Controller
     }
 
     public function getOrderForDelivery(){
-        $deliver = DB::select('SELECT * from payment as p, payment_order as po, orders as o, shop as sh , order_status as os WHERE os.id = o.id_status AND p.id = po.payment_id AND po.order_id= o.id AND o.id_shop= sh.id');
+        $deliver = DB::select('SELECT * from payment as p, payment_order as po, orders as o, shop as sh , order_status as os WHERE os.id = o.id_status AND p.id = po.payment_id AND po.order_id= o.id AND o.id_shop= sh.id AND os.id = 3');
+        return $deliver;
+    }
+
+    public function getOrderForAccept($id){
+        $deliver = DB::select('SELECT * from payment as p, payment_order as po, orders as o, shop as sh , order_status as  os, deliver as d WHERE d.id_payment = p.id AND os.id = o.id_status AND p.id = po.payment_id AND po.order_id= o.id AND o.id_shop= sh.id AND os.id = 4 AND d.id_user = '.$id);
+        return $deliver;
+    }
+
+    public function getOrderForComplete($id){
+        $deliver = DB::select('SELECT * from payment as p, payment_order as po, orders as o, shop as sh , order_status as  os, deliver as d WHERE d.id_payment = p.id AND os.id = o.id_status AND p.id = po.payment_id AND po.order_id= o.id AND o.id_shop= sh.id AND os.id = 5 AND d.id_user = '.$id);
         return $deliver;
     }
 

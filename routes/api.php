@@ -141,6 +141,9 @@ Route::get('progress/suscess/{id}',[ProgressController::class,'getProgressSucess
 Route::put('progress/{id}',[ProgressController::class,'update']);
 Route::get('progress',[ProgressController::class,'getOrderForDelivery']);
 Route::post('deliver',[ProgressController::class,'ordertodeliver']);
+Route::get('deliver/{id}',[ProgressController::class,'getOrderForAccept']);
+Route::get('complete/deliver/{id}',[ProgressController::class,'getOrderForComplete']);
+
 
 //PromotionContronller
 Route::get('promotion',[PromotionContronller::class,'index']);

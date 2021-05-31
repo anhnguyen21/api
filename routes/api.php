@@ -43,6 +43,7 @@ Route::patch('updateProfile/{id}',[ProfileControler::class,'updateEditAdmin']);
 Route::post('uploadImg',[ProfileControler::class,'uploadImage']);
 Route::get('uploadImg',[ProfileControler::class,'uploadImage']);
 Route::get('profileAd',[ProfileControler::class,'profileAdmin']);
+Route::put('profile/users/{id}',[ProfileControler::class,'updateProfi']);
 
 //Products
 Route::get('Allproducts/{id_user}',[ProductController::class,'getALlProduct']);
@@ -70,21 +71,23 @@ Route::get('getWeek/{counter}',[ProductController::class,'getDayofYear']);
 Route::get('getNumber',[ProductController::class,'getNumberWeek']);
  /// SHop
  Route::get('shop',[ShopController::class,'getShop']);
- //Route::get('shopChart',[ShopController::class,'getShopChart']);
+ Route::get('shop/{id}',[ShopController::class,'getOneShop']);
+ Route::get('all/shop',[ShopController::class,'getAllShop']);
  Route::delete('shop/{id}',[ShopController::class,'destroy']);
  
 
 
 //Order
 Route::get('Allorder/{id_user}',[OrderController::class,'getAllOrder']);
-Route::get('orderadmin',[ProgressController::class,'getPaymentAdmin']);
+Route::get('listOrder',[OrderController::class,'getListOrder']);
+Route::get('order_admin',[ProgressController::class,'getPaymentAdmin']);
 Route::get('order',[OrderController::class,'getOrder']);
 Route::get('order/{id}',[OrderController::class,'getOrderDetails']);
 Route::post('addproducttoorder',[OrderController::class,'getAddProduct']);
 Route::put('order/{id}',[OrderController::class,'update']);
 Route::put('orderUpdate/{id}',[OrderController::class,'updateAdmin']);
 Route::get('order_show/{id}',[OrderController::class,'show']);
-Route::get('detail_order/{id}',[OrderController::class,'getOrderDetailsAdmin']);
+Route::get('order/detailAdmin/{id_payment}',[OrderController::class,'getOrderDetailsAdmin']);
 Route::post('addpro',[OrderController::class,'getAddPro']);
 Route::delete('orders/{id}',[OrderController::class, 'deleteOrder']);
 Route::post('deleteproducttoorder',[OrderController::class,'deleteProductInOrder']);
@@ -137,6 +140,7 @@ Route::get('progress/waiting/{id}',[ProgressController::class,'getProgressWaitin
 Route::get('progress/suscess/{id}',[ProgressController::class,'getProgressSucess']);
 Route::put('progress/{id}',[ProgressController::class,'update']);
 Route::get('progress',[ProgressController::class,'getOrderForDelivery']);
+Route::post('deliver',[ProgressController::class,'ordertodeliver']);
 
 //PromotionContronller
 Route::get('promotion',[PromotionContronller::class,'index']);

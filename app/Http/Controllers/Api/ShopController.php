@@ -13,6 +13,15 @@ class ShopController extends Controller
         $shop = DB::select('select s.*, u.* from shop as s , users as u where s.id_user = u.id');
         return $shop;
     }
+
+    public function getAllShop() {
+        $shop = DB::select('select * from shop');
+        return $shop;
+    }
+
+    public function getOneShop($id) {
+        return shop::find($id);
+    }
     // public function getShopChart(){
     //     $shops=shop::select(shop::raw('extract(month from "created_at") as month'),shop::raw('COUNT(id) as sum'))
     //     ->whereYear('created_at', now()->year)

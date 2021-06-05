@@ -42,7 +42,12 @@ class ProgressController extends Controller
     }
 
     public function getOrderForDelivery(){
-        $deliver = DB::select('SELECT * from payment as p, payment_order as po, orders as o, shop as sh , order_status as os WHERE os.id = o.id_status AND p.id = po.payment_id AND po.order_id= o.id AND o.id_shop= sh.id AND os.id = 3');
+        $deliver = DB::select('SELECT * from payment as p, payment_order as po, orders as o, shop as sh , order_status as os WHERE os.id = o.id_status AND p.id = po.payment_id AND po.order_id= o.id AND o.id_shop= sh.id');
+        return $deliver;
+    }
+
+    public function getOrderForDeliveryCanOrder(){
+        $deliver = DB::select('SELECT * from payment as p, payment_order as po, orders as o, shop as sh , order_status as os WHERE os.id = o.id_status AND p.id = po.payment_id AND po.order_id= o.id AND o.id_shop= sh.id AND o.id_status = 3');
         return $deliver;
     }
 
@@ -108,6 +113,40 @@ class ProgressController extends Controller
             $notification->id_user = $request->get('user_id');
             $notification->type = 3;
             $notification->content = 'Tài xế '.users::find($request->get('user_id'))->account.' đã nhận đơn hàng '.payment::find($request->get('id_payment'))->name_recive;
+            $notification->time = date_create()->format('Y-m-d H:i:s');
+            $notification->save();
+        }
+        $this->MessageAddProduct($request->get('token_device'));
+        return $order;
+    }
+
+    public function ordertoConfirm(Request $request) {
+        $order = DB::table('payment_order')
+        ->join('payment', 'payment.id', '=', 'payment_order.payment_id')
+        ->join('orders', 'orders.id', '=', 'payment_order.order_id')
+        ->where('payment_order.payment_id' ,$request->get('id_payment'))
+        ->get();
+        json_encode($order, TRUE);
+        for ($i = 0; $i < count($order); $i++) {
+            if ($order[$i]->id_status == 4) {
+                $order[$i]->id_status = $order[$i]->id_status + 1;
+                DB::table('orders')->where('id', $order[$i]->id)->update(['id_status' => $order[$i]->id_status]);
+            }
+        }
+        if ($order != null) {
+            $notification = new nonfication();
+            $notification->id_product = 0;
+            $notification->id_user = $request->get('user_id');
+            $notification->type = 2;
+            $notification->content = 'Món quà đã được giao thành công' . " " . users::find($request->get('user_id'))->name;
+            $notification->time = date_create()->format('Y-m-d H:i:s');
+            $notification->save();
+
+            $notification = new nonfication();
+            $notification->id_product = 0;
+            $notification->id_user = $request->get('user_id');
+            $notification->type = 3;
+            $notification->content = 'Tài xế '.users::find($request->get('user_id'))->account.' đã giao đơn hàng thành công'.payment::find($request->get('id_payment'))->name_recive;
             $notification->time = date_create()->format('Y-m-d H:i:s');
             $notification->save();
         }

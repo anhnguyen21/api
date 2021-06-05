@@ -156,37 +156,19 @@ class LoginController extends Controller
            'phone' => 'required|max:11|min:10',
            'email' => 'required|regex:/(.+)@(gmail)\.(com)/i'
        ],[
-           'account.required' => 'Tài khoản rỗng',
-           'account.max' => 'Tài khoản quá 20 kí tự',
+           'account.required' => 'Tên đăng nhập rỗng',
+           'account.max' => 'Tên đăng nhập quá 20 kí tự',
            'account.min' => 'Tài khoản ít hơn 5 kí tự',
            'password.required' => 'Mật khẩu rỗng',
            'password.min' => 'Mật khẩu ít hơn 3 kí tự',
-           'phone.required' => 'Mật khẩu rỗng',
-           'phone.max' => 'Mật khẩu quá 11 kí tự',
-           'phone.min' => 'Mật khẩu ít hơn 10 kí tự',
+           'phone.required' => 'Số điện thoại rỗng',
+           'phone.max' => 'Số điện thoại quá 11 kí tự',
+           'phone.min' => 'Số điện thoại ít hơn 10 kí tự',
            'email.required' => 'email rỗng',
            'email.regex' => 'Không phải email',
        ]);
        if ($validator->fails()) {
            return response()->json($validator->errors(),400);
-       }else{
-           $name = $request->input('account');
-           $password = $request->input('password');
-           $key ="anh";
-           if (Auth::attempt(['account' => $name, 'password' => $password])) {
-               $user_id= Auth::user()->id;
-                $array = array("idToken" => $user_id);
-               return response()->json($array,400);
-           }else{
-               $users=new users();
-               $users->account=$request->get('account');
-               $users->email=$request->get('email');
-               $users->phone=$request->get('phone');
-               $users->password=Hash::make($request->get('password'));
-               $users->remember_token='0';
-               $users->save();
-               echo "regist user success";
-           }
        }
    }
 

@@ -129,6 +129,8 @@ class ChatContronller extends Controller
         SET  img = 'https://thegioidienanh.vn/stores/news_dataimages/anhvu/052021/26/23/3832_mdh2.jpg?rt=20210526234133'
         WHERE id = 10");
         return $userchat;
+       
+    
     }
 
     /**

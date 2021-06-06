@@ -130,6 +130,8 @@ Route::post('PostInsertChatAdmin',[ChatContronller::class,'postInsertMessageUser
 Route::get('chatadmin',[ChatContronller::class,'getchatadmin']);
 Route::get('chatcustomer',[ChatContronller::class,'getchatCustomeradmin']);
 Route::post('chatcus',[ChatContronller::class,'addMessageShop']);
+Route::put('updateuserchat',[ChatContronller::class,'update']);
+
 //Search list chat
 Route::post('searchchat',[ChatContronller::class,'search']);
 
@@ -142,11 +144,8 @@ Route::put('progress/{id}',[ProgressController::class,'update']);
 Route::get('progress',[ProgressController::class,'getOrderForDelivery']);
 Route::post('deliver',[ProgressController::class,'ordertodeliver']);
 Route::get('deliver/{id}',[ProgressController::class,'getOrderForAccept']);
-<<<<<<< HEAD
-=======
 Route::get('complete/deliver/{id}',[ProgressController::class,'getOrderForComplete']);
 
->>>>>>> 60662cb56e877d65ee2e5253297eebe4915f23d6
 
 //PromotionContronller
 Route::get('promotion',[PromotionContronller::class,'index']);

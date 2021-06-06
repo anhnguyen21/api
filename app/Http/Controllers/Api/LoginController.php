@@ -7,6 +7,7 @@ use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 // use Illuminate\Http\Requests\users;
 use App\Models\users;
+use App\Models\device;
 use \Firebase\JWT\JWT;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -23,6 +24,21 @@ class LoginController extends Controller
      */
     public function getAccount(){
         return users::all();
+    }
+
+    public function saveDeviceToken(Request $request) {
+        $device = DB::table('device_token')
+        ->where('id_user', $request->get('id_user'))
+        ->get();
+        if (count($device) == 0) {
+            $device = new device();
+            $device->id_user = $request->get('id_user');
+            $device->device_token = $request->get('device_token');
+            $device->save();
+            return response()->json($device, 200);
+        } else {
+            return response()->json('failed', 400);
+        }
     }
 
     public function loginUser(Request $request){

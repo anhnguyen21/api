@@ -27,7 +27,7 @@ Route::post('register',[LoginController::class, 'register']);
 Route::PUT('uploadImageUser/{id}',[LoginController::class, 'uploadImageUser']);
 Route::get('account/{id}',[LoginController::class, 'showAccount']);
 Route::delete('account/{id}',[LoginController::class, 'destroyAccount']);
-
+Route::post('device',[LoginController::class, 'saveDeviceToken']);
 
 //Login
 Route::post('login',[LoginController::class,'loginUser']);

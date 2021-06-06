@@ -142,11 +142,16 @@ Route::get('progress/waiting/{id}',[ProgressController::class,'getProgressWaitin
 Route::get('progress/suscess/{id}',[ProgressController::class,'getProgressSucess']);
 Route::put('progress/{id}',[ProgressController::class,'update']);
 Route::get('progress',[ProgressController::class,'getOrderForDelivery']);
+Route::get('accpet/deliver',[ProgressController::class,'getOrderForDeliveryCanOrder']);
 Route::post('deliver',[ProgressController::class,'ordertodeliver']);
+Route::post('confirm/deliver',[ProgressController::class,'ordertoConfirm']);
 Route::get('deliver/{id}',[ProgressController::class,'getOrderForAccept']);
 Route::get('complete/deliver/{id}',[ProgressController::class,'getOrderForComplete']);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> e0b5822696b91175bab0b5744782c892e1ffa418
 //PromotionContronller
 Route::get('promotion',[PromotionContronller::class,'index']);
 

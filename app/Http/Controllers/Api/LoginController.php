@@ -30,11 +30,11 @@ class LoginController extends Controller
             'account' => 'required|max:20|min:5',
             'password' => 'required|min:3',
         ],[
-            'account.required' => 'Tài khoản rỗng',
-            'account.max' => 'Tài khoản quá 20 kí tự',
-            'account.min' => 'Tài khoản ít hơn 5 kí tự',
-            'password.required' => 'Mật khẩu rỗng',
-            'password.min' => 'Mật khẩu ít hơn 3 kí tự',
+            'account.required' => 'Tên đăng nhâp và mật khẩu rỗng',
+            'account.max' => 'Nhập sai mật khẩu hoặc tên đăng nhập',
+            'account.min' => 'Nhập sai mật khẩu hoặc tên đăng nhập',
+            'password.required' => 'Tên đăng nhâp và mật khẩu rỗng',
+            'password.min' => 'Nhập sai mật khẩu hoặc tên đăng nhập',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(),400);
@@ -94,59 +94,83 @@ class LoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    public function registerGoogle(Request $request){
+        $validator = Validator::make($request->all(), [
+           'account' => 'required|max:20|min:5',
+           'password' => 'required|min:3',
+           'phone' => 'required|max:11|min:10',
+           'firstName' => 'required',
+           'lastName' => 'required',
+           'address' => 'required',
+           'email' => 'required|regex:/(.+)@(gmail)\.(com)/i'
+       ],[
+           'account.required' => 'Tài khoản rỗng',
+           'account.max' => 'Tài khoản quá 20 kí tự',
+           'account.min' => 'Tài khoản ít hơn 5 kí tự',
+           'password.required' => 'Mật khẩu rỗng',
+           'password.min' => 'Mật khẩu ít hơn 3 kí tự',
+           'phone.required' => 'Mật khẩu rỗng',
+           'phone.max' => 'Mật khẩu quá 11 kí tự',
+           'phone.min' => 'Mật khẩu ít hơn 10 kí tự',
+           'firstName.required' => 'Tên rỗng',
+           'lastName.required' => 'Họ rỗng',
+           'address.required' => 'Địa chỉ rỗng',
+           'email.required' => 'email rỗng',
+           'email.regex' => 'Không phải email',
+       ]);
+       if ($validator->fails()) {
+           return response()->json($validator->errors(),400);
+       }else{
+           $name = $request->input('account');
+           $password = $request->input('password');
+           $key ="anh";
+           if (Auth::attempt(['account' => $name, 'password' => $password])) {
+               $user_id= Auth::user()->id;
+               // $data=JWT::encode($user_id, $key);
+                $array = array("idToken" => $user_id);
+               return response()->json($array,400);
+           }else{
+               $users=new users();
+               $users->account=$request->get('account');
+               $users->firstName=$request->get('firstName');
+               $users->lastName=$request->get('lastName');
+               $users->email=$request->get('email');
+               $users->phone=$request->get('phone');
+               $users->gender=$request->get('gender');
+               $users->address=$request->get('address');
+               $users->password=Hash::make($request->get('password'));
+               $users->birthday=$request->get('brithday');
+               $users->img=$request->get('img');
+               $users->remember_token='0';
+               $users->save();
+               echo "regist user success";
+           }
+       }
+   }
+
     public function register(Request $request){
-         $validator = Validator::make($request->all(), [
-            'account' => 'required|max:20|min:5',
-            'password' => 'required|min:3',
-            'phone' => 'required|max:11|min:10',
-            'firstName' => 'required',
-            'lastName' => 'required',
-            'address' => 'required',
-            'email' => 'required|regex:/(.+)@(gmail)\.(com)/i'
-        ],[
-            'account.required' => 'Tài khoản rỗng',
-            'account.max' => 'Tài khoản quá 20 kí tự',
-            'account.min' => 'Tài khoản ít hơn 5 kí tự',
-            'password.required' => 'Mật khẩu rỗng',
-            'password.min' => 'Mật khẩu ít hơn 3 kí tự',
-            'phone.required' => 'Mật khẩu rỗng',
-            'phone.max' => 'Mật khẩu quá 11 kí tự',
-            'phone.min' => 'Mật khẩu ít hơn 10 kí tự',
-            'firstName.required' => 'Tên rỗng',
-            'lastName.required' => 'Họ rỗng',
-            'address.required' => 'Địa chỉ rỗng',
-            'email.required' => 'email rỗng',
-            'email.regex' => 'Không phải email',
-        ]);
-        if ($validator->fails()) {
-            return response()->json($validator->errors(),400);
-        }else{
-            $name = $request->input('account');
-            $password = $request->input('password');
-            $key ="anh";
-            if (Auth::attempt(['account' => $name, 'password' => $password])) {
-                $user_id= Auth::user()->id;
-                // $data=JWT::encode($user_id, $key);
-    	 	    $array = array("idToken" => $user_id);
-    			return response()->json($array,400);
-            }else{
-                $users=new users();
-                $users->account=$request->get('account');
-                $users->firstName=$request->get('firstName');
-                $users->lastName=$request->get('lastName');
-                $users->email=$request->get('email');
-                $users->phone=$request->get('phone');
-                $users->gender=$request->get('gender');
-                $users->address=$request->get('address');
-                $users->password=Hash::make($request->get('password'));
-                $users->birthday=$request->get('brithday');
-                $users->img=$request->get('img');
-                $users->remember_token='0';
-                $users->save();
-                echo "regist user success";
-            }
-        }
-    }
+        $validator = Validator::make($request->all(), [
+           'account' => 'required|max:20|min:5',
+           'password' => 'required|min:3',
+           'phone' => 'required|max:11|min:10',
+           'email' => 'required|regex:/(.+)@(gmail)\.(com)/i'
+       ],[
+           'account.required' => 'Tên đăng nhập rỗng',
+           'account.max' => 'Tên đăng nhập quá 20 kí tự',
+           'account.min' => 'Tài khoản ít hơn 5 kí tự',
+           'password.required' => 'Mật khẩu rỗng',
+           'password.min' => 'Mật khẩu ít hơn 3 kí tự',
+           'phone.required' => 'Số điện thoại rỗng',
+           'phone.max' => 'Số điện thoại quá 11 kí tự',
+           'phone.min' => 'Số điện thoại ít hơn 10 kí tự',
+           'email.required' => 'email rỗng',
+           'email.regex' => 'Không phải email',
+       ]);
+       if ($validator->fails()) {
+           return response()->json($validator->errors(),400);
+       }
+   }
 
     /**
      * Display the specified resource.

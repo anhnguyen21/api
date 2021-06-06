@@ -25,39 +25,39 @@ class ProgressController extends Controller
 
     public function getProgress($id)
     {
-        $progress = DB::select('SELECT o.*, pro.*, sh.*, o.quantity as quantityCart, pro.name as nameproduct from orders as o, product as pro, shop as sh WHERE sh.id = o.id_shop AND o.id_product = pro.id AND o.id_user ='.$id);
+        $progress = DB::select('SELECT o.*, pro.*, sh.*, o.quantity as quantityCart, pro.name as nameproduct from orders as o, product as pro, shop as sh WHERE sh.id = o.id_shop AND o.id_product = pro.id AND o.id_user ='.$id.' ORDER BY o.created_at DESC');
         return $progress;
     }
 
     public function getProgressWaiting($id)
     {
-        $progress = DB::select('SELECT * from payment as p, payment_order as po, orders as o, shop as sh , order_status as os WHERE os.id = o.id_status AND p.id = po.payment_id AND o.id_status IN (1,2,3,4) AND po.order_id= o.id AND o.id_shop= sh.id AND p.user_id ='.$id);
+        $progress = DB::select('SELECT * from payment as p, payment_order as po, orders as o, shop as sh , order_status as os WHERE os.id = o.id_status AND p.id = po.payment_id AND o.id_status IN (1,2,3,4) AND po.order_id= o.id AND o.id_shop= sh.id AND p.user_id ='.$id.' ORDER BY o.created_at DESC');
         return $progress;
     }
 
     public function getProgressSucess($id)
     {
-        $progress = DB::select('SELECT * from payment as p, payment_order as po, orders as o, shop as sh , order_status as os WHERE os.id = o.id_status AND p.id = po.payment_id AND o.id_status = 5 AND po.order_id= o.id AND o.id_shop= sh.id AND p.user_id ='.$id);
+        $progress = DB::select('SELECT * from payment as p, payment_order as po, orders as o, shop as sh , order_status as os WHERE os.id = o.id_status AND p.id = po.payment_id AND o.id_status = 5 AND po.order_id= o.id AND o.id_shop= sh.id AND p.user_id ='.$id.' ORDER BY o.created_at DESC');
         return $progress;
     }
 
     public function getOrderForDelivery(){
-        $deliver = DB::select('SELECT * from payment as p, payment_order as po, orders as o, shop as sh , order_status as os WHERE os.id = o.id_status AND p.id = po.payment_id AND po.order_id= o.id AND o.id_shop= sh.id');
+        $deliver = DB::select('SELECT * from payment as p, payment_order as po, orders as o, shop as sh , order_status as os WHERE os.id = o.id_status AND p.id = po.payment_id AND po.order_id= o.id AND o.id_shop= sh.id ORDER BY o.created_at DESC');
         return $deliver;
     }
 
     public function getOrderForDeliveryCanOrder(){
-        $deliver = DB::select('SELECT * from payment as p, payment_order as po, orders as o, shop as sh , order_status as os WHERE os.id = o.id_status AND p.id = po.payment_id AND po.order_id= o.id AND o.id_shop= sh.id AND o.id_status = 3');
+        $deliver = DB::select('SELECT * from payment as p, payment_order as po, orders as o, shop as sh , order_status as os WHERE os.id = o.id_status AND p.id = po.payment_id AND po.order_id= o.id AND o.id_shop= sh.id AND o.id_status = 3 ORDER BY o.created_at DESC');
         return $deliver;
     }
 
     public function getOrderForAccept($id){
-        $deliver = DB::select('SELECT * from payment as p, payment_order as po, orders as o, shop as sh , order_status as  os, deliver as d WHERE d.id_payment = p.id AND os.id = o.id_status AND p.id = po.payment_id AND po.order_id= o.id AND o.id_shop= sh.id AND os.id = 4 AND d.id_user = '.$id);
+        $deliver = DB::select('SELECT * from payment as p, payment_order as po, orders as o, shop as sh , order_status as  os, deliver as d WHERE d.id_payment = p.id AND os.id = o.id_status AND p.id = po.payment_id AND po.order_id= o.id AND o.id_shop= sh.id AND os.id = 4 AND d.id_user = '.$id.' ORDER BY o.created_at DESC');
         return $deliver;
     }
 
     public function getOrderForComplete($id){
-        $deliver = DB::select('SELECT * from payment as p, payment_order as po, orders as o, shop as sh , order_status as  os, deliver as d WHERE d.id_payment = p.id AND os.id = o.id_status AND p.id = po.payment_id AND po.order_id= o.id AND o.id_shop= sh.id AND os.id = 5 AND d.id_user = '.$id);
+        $deliver = DB::select('SELECT * from payment as p, payment_order as po, orders as o, shop as sh , order_status as  os, deliver as d WHERE d.id_payment = p.id AND os.id = o.id_status AND p.id = po.payment_id AND po.order_id= o.id AND o.id_shop= sh.id AND os.id = 5 AND d.id_user = '.$id.' ORDER BY o.created_at DESC');
         return $deliver;
     }
 

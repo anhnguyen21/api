@@ -62,9 +62,6 @@ class OrderController extends Controller
     }
     public function show()
     {
-        // $pro=DB::select("UPDATE shop
-        // SET name = 'Tiệm hoa Tươi Ohara Floral', address = '30 Phạm Quang Ảnh, An Hải Bắc, Sơn Trà, Đà Nẵng', image = 'https://lh5.googleusercontent.com/p/AF1QipMfanvyKqHem1LheEVvMgnYiXj_UrtpTlh-u8Lp=w408-h306-k-no', lat = '16.0627737', lng = '108.2026815'
-        // WHERE id = 1");
         $pro1=DB::select("UPDATE shop
          SET name = 'Shop Hoa Tươi Lưu Ly', address = '11 Đường Nguyễn Văn Thoại, Bắc Mỹ Phú, Sơn Trà, Đà Nẵng', image = 'https://lh5.googleusercontent.com/p/AF1QipNVOQx36nbSHGicGWTAhWuXrfjUR06K83Pqf4W1=w408-h544-k-no', lat = '16.0609083', lng = '108.2417068'
          WHERE id = 2");

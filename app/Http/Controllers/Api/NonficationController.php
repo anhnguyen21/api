@@ -19,19 +19,19 @@ class NonficationController extends Controller
         return nonfication::all();
     }
     public function getNotification($id){
-        $notification = DB::select('select u.*,n.*,p.* from nonfications as n , users as u, product as p where n.id_user=u.id and n.id_product = p.id and u.id='.$id);
+        $notification = DB::select('select u.*,n.*,p.* from nonfications as n , users as u, product as p where n.id_user=u.id and n.id_product = p.id and u.id='.$id.' ORDER BY n.time DESC');
         return $notification;
     }
 
     public function getNotificationOfDeliver(){
         $notification = DB::select('select u.*,n.* from nonfications as n , users as u
-        where n.id_user=u.id and n.type = 3');
+        where n.id_user=u.id and n.type = 3 ORDER BY n.time DESC');
         return $notification;
     }
 
     public function getNotificationShop(){
         $notification = DB::select('select u.*,n.* from nonfications as n , users as u
-        where n.id_user=u.id and n.type = 3');
+        where n.id_user=u.id and n.type = 3 ORDER BY n.time DESC');
         return $notification;
     }
 

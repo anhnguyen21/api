@@ -123,7 +123,7 @@ class ChatContronller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update()
     {
         $userchat=DB::select("UPDATE users
         SET  img = 'https://thegioidienanh.vn/stores/news_dataimages/anhvu/052021/26/23/3832_mdh2.jpg?rt=20210526234133'

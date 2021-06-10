@@ -42,7 +42,8 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        return product::find($id);   
+      $product = DB::select('select p.*,s.*, s.name as nameshop, p.name as namepro, p.id as id_pro from product as p , shop as s where p.id_shop = s.id and p.id ='.$id);
+      return $product;
     }
 
 
